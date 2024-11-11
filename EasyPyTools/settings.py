@@ -31,7 +31,9 @@ DEBUG = False
 DEBUG = os.getenv('DEBUG') == 'True'
 
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
+# TODO: .envによる環境変数の設定断念。できませんでしたのでハードコーディングします。
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ["ShamNeko88.pythonanywhere.com"]
 
 
 # Application definition
