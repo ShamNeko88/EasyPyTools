@@ -1,0 +1,5 @@
+venv
+SECRET
+*.sqlite3
+__pycache__
+.vscode
