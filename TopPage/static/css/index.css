@@ -1,0 +1,11 @@
+.blockquote {
+    background-color: #d2e0ed;
+    padding: 20px;
+    border-left: 5px solid #00ffe5;
+    margin-top: 10px;
+}
+
+.carousel-inner {
+    background-color: #efeee9;
+    padding: 30px;
+}
