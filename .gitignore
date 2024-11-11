@@ -4,3 +4,4 @@ SECRET
 __pycache__
 .vscode
 staticfiles
+.env
