@@ -6,7 +6,7 @@ on:
       - main  # mainブランチにプッシュされたときにデプロイが実行される
 
 jobs:
-  deploy:
+    deploy:
     runs-on: ubuntu-latest  # Ubuntu環境で実行
 
     steps:
@@ -26,21 +26,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt  # requirements.txtを使って依存関係をインストール
 
-      # PythonAnywhereにデプロイ
+      # pythonanywhereにデプロイ
       - name: Deploy to PythonAnywhere
         env:
           PA_USERNAME: ${{ secrets.PA_USERNAME }}  # GitHub SecretsからPythonAnywhereのユーザー名を取得
           PA_API_TOKEN: ${{ secrets.PA_API_TOKEN }}  # GitHub SecretsからAPIトークンを取得
-          PA_WEBAPP_NAME: ${{ secrets.PA_WEBAPP_NAME }}  # GitHub Secretsからウェブアプリ名を取得
         run: |
-          # デプロイ用にファイルを圧縮
-          zip -r deploy.zip .
-          # PythonAnywhereにファイルをアップロード
-          curl -u $PA_USERNAME:$PA_API_TOKEN \
-            -X POST "https://www.pythonanywhere.com/api/v0/user/$PA_USERNAME/files/path/home/$PA_USERNAME/deploy.zip" \
-            --form file=@deploy.zip
-          rm deploy.zip  # アップロード後にzipファイルを削除
+          # SSHでPythonAnywhereに接続してgit pullを実行
+          ssh $PA_USERNAME@ssh.pythonanywhere.com "
+            cd /home/$PA_USERNAME/myproject && \
+            git pull origin main && \
+            pip install -r requirements.txt && \
+            python manage.py migrate && \
+            touch myproject/wsgi.py  # サーバーを再起動するためにwsgi.pyを更新"
 
-          # PythonAnywhereのウェブアプリをリロード
-          curl -u $PA_USERNAME:$PA_API_TOKEN \
-            -X POST "https://www.pythonanywhere.com/api/v0/user/$PA_USERNAME/webapps/$PA_WEBAPP_NAME/reload/"
+
