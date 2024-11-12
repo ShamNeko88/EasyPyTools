@@ -5,10 +5,11 @@
   <link rel="stylesheet" href="{% static 'css/index.css' %}" />
 {% endblock %}
 
-{% block title %}EasyPyTools{% endblock %}
+{% block title %}
+  EasyPyTools
+{% endblock %}
 
 {% block content %}
-
   <!-- 概要説明 -->
   <div class="container">
     <blockquote class="blockquote text-center">
@@ -17,73 +18,99 @@
 
     <!-- カルーセルで簡易的にツール紹介 -->
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="d-block w-100 text-center">
-                    <p class="lead">複数人でリアルタイムにメモを編集</p>
-                    <p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
-                        </svg> EasyLiveMemo
-                    </p>
-                </div>
-            </div>
-            <div class="carousel-item text-center">
-                <div class="d-block w-100">
-                    <p class="lead">Coming soon</p>
-                    <p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
-                        </svg> Coming soon
-                    </p>
-                </div>
-            </div>
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <!-- EasyLiveMemo -->
+        <div class="carousel-item active">
+          <div class="d-block w-100 text-center">
+            <p class="lead">マークダウンで簡単ブログ作成</p>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5" />
+              </svg>EasyMdBlog
+            </p>
+          </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+        <!-- EasyLearningCard -->
+        <div class="carousel-item text-center">
+          <div class="d-block w-100">
+            <p class="lead">シンプルな暗記カード</p>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5" />
+              </svg>EasyLearningCard
+            </p>
+          </div>
+        </div>
+        <!-- EasyMdBlog -->
+        <div class="carousel-item text-center">
+          <div class="d-block w-100">
+            <p class="lead">複数人でリアルタイムにメモを編集</p>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5" />
+              </svg>EasyLiveMemo
+            </p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
   </div>
 
   <!-- ツール紹介 -->
   <div class="container mt-5">
     <div class="row">
+      <!-- EasyMdBlog -->
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-header">EasyMdBlog</div>
+          <div class="card-body">
+            <ul>
+              <li>マークダウンで作成</li>
+              <li>誰でも簡単にブログを作成</li>
+            </ul>
+            <a href="#" class="btn-sm btn-primary">Commig Soon</a>
+          </div>
+        </div>
+      </div>
+      <!-- EasyLearningCard -->
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-header">EasyLearningCard</div>
+          <div class="card-body">
+            <ul>
+              <li>暗記カード</li>
+              <li>一問一答</li>
+            </ul>
+            <a href="#" class="btn-sm btn-primary">Commig Soon</a>
+          </div>
+        </div>
+      </div>
       <!-- EasyLiveMemo -->
       <div class="col-md-6 mb-4">
         <div class="card">
           <div class="card-header">EasyLiveMemo</div>
           <div class="card-body">
             <ul>
-              <li>同時編集</li>
+              <li>複数人同時編集</li>
               <li>リアルタイム</li>
-              <li>アカウント不要</li>
             </ul>
-            <a href="{% url 'EasyLiveMemo' %}" class="btn-sm btn-primary">今すぐ使う</a>
-          </div>
-        </div>
-      </div>
-      <!-- ダミー１ -->
-      <div class="col-md-6 mb-4">
-        <div class="card">
-          <div class="card-header">Coming soon</div>
-          <div class="card-body">
-            <ul>
-              <li>Coming soon</li>
-            </ul>
-            <a href="#" class="btn-sm btn-primary">今すぐ使う</a>
+            <a href="{% url 'EasyLiveMemo' %}" class="btn-sm btn-primary">Coming soon</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 {% endblock %}
