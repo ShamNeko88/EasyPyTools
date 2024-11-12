@@ -3,5 +3,5 @@ from .views import IndexView
 
 
 urlpatterns = [
-    path("EasyLiveMemo", IndexView.as_view(), name="EasyLiveMemo")
+    path("", IndexView.as_view(), name="memo-index")
 ]

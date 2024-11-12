@@ -5,4 +5,4 @@ from django.views.generic import (
 
 # ルート
 class IndexView(TemplateView):
-    template_name = "EasyLiveMemo/index.html"
+    template_name = "EasyLiveMemo/memo-index.html"
