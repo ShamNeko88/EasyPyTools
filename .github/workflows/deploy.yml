@@ -1,3 +1,4 @@
+# TODO: いったんpythonanywhereは手動でデプロイで対応
 name: Deploy to PythonAnywhere
 
 on:
@@ -29,15 +30,22 @@ jobs:
       # pythonanywhereにデプロイ
       - name: Deploy to PythonAnywhere
         env:
-          PA_USERNAME: ${{ secrets.PA_USERNAME }}  # GitHub SecretsからPythonAnywhereのユーザー名を取得
-          PA_API_TOKEN: ${{ secrets.PA_API_TOKEN }}  # GitHub SecretsからAPIトークンを取得
+          PA_USERNAME: ${{ secrets.PA_USERNAME }}
+          PA_API_TOKEN: ${{ secrets.PA_API_TOKEN }}
+          PA_SSH_KEY: ${{ secrets.PA_SSH_KEY }}  # SSH秘密鍵をGitHub Secretsに保存
         run: |
-          # SSHでPythonAnywhereに接続してgit pullを実行
+          # SSH秘密鍵をセット
+          mkdir -p ~/.ssh
+          echo "$PA_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          
+          # PythonAnywhereにSSHで接続してデプロイ
           ssh $PA_USERNAME@ssh.pythonanywhere.com "
             cd /home/$PA_USERNAME/myproject && \
             git pull origin main && \
             pip install -r requirements.txt && \
             python manage.py migrate && \
-            touch myproject/wsgi.py  # サーバーを再起動するためにwsgi.pyを更新"
+            touch myproject/wsgi.py"
+
 
 
