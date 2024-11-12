@@ -3,39 +3,44 @@ name: Deploy to PythonAnywhere
 on:
   push:
     branches:
-      - main  # デプロイをトリガーするブランチを指定
+      - main  # mainブランチにプッシュされたときにデプロイが実行される
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Ubuntu環境で実行
 
     steps:
+      # リポジトリのコードをチェックアウト (v3)
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
+      # Python環境をセットアップ (v3)
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
-          python-version: '3.10'
+          python-version: '3.8'  # 使用するPythonのバージョン
 
+      # 依存関係をインストール
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt  # requirements.txtを使って依存関係をインストール
 
+      # PythonAnywhereにデプロイ
       - name: Deploy to PythonAnywhere
         env:
-          PA_USERNAME: ${{ secrets.PA_USERNAME }}
-          PA_API_TOKEN: ${{ secrets.PA_API_TOKEN }}
-          PA_WEBAPP_NAME: ${{ secrets.PA_WEBAPP_NAME }}
+          PA_USERNAME: ${{ secrets.PA_USERNAME }}  # GitHub SecretsからPythonAnywhereのユーザー名を取得
+          PA_API_TOKEN: ${{ secrets.PA_API_TOKEN }}  # GitHub SecretsからAPIトークンを取得
+          PA_WEBAPP_NAME: ${{ secrets.PA_WEBAPP_NAME }}  # GitHub Secretsからウェブアプリ名を取得
         run: |
-          # GitHubからPythonAnywhereにコードをコピー
+          # デプロイ用にファイルを圧縮
           zip -r deploy.zip .
+          # PythonAnywhereにファイルをアップロード
           curl -u $PA_USERNAME:$PA_API_TOKEN \
             -X POST "https://www.pythonanywhere.com/api/v0/user/$PA_USERNAME/files/path/home/$PA_USERNAME/deploy.zip" \
             --form file=@deploy.zip
-          rm deploy.zip
+          rm deploy.zip  # アップロード後にzipファイルを削除
 
-          # PythonAnywhereでデプロイを実行
+          # PythonAnywhereのウェブアプリをリロード
           curl -u $PA_USERNAME:$PA_API_TOKEN \
             -X POST "https://www.pythonanywhere.com/api/v0/user/$PA_USERNAME/webapps/$PA_WEBAPP_NAME/reload/"
