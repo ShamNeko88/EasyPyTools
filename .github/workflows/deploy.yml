@@ -6,7 +6,7 @@ on:
       - main  # mainブランチにプッシュされたときにデプロイが実行される
 
 jobs:
-    deploy:
+  deploy:
     runs-on: ubuntu-latest  # Ubuntu環境で実行
 
     steps:
