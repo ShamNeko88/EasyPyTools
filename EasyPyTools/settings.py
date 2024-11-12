@@ -27,9 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a8zmaew-kk8f^ey=+_jkd$_eq0#67)9#0ylf(86axii-4tkqcu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-DEBUG = os.getenv('DEBUG') == 'True'
-
+DEBUG = os.getenv('DEBUG') == 'True'  # .envファイルで「DEBUG=True」であればデバッグモード起動
 
 # TODO: .envによる環境変数の設定断念。できませんでしたのでハードコーディングします。
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
