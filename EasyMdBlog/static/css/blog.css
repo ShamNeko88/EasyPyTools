@@ -40,3 +40,8 @@
     padding-left: 1rem;
     color: #666;
 }
+
+.card-body a {
+    color: #000;
+    font-weight: bold;
+}
