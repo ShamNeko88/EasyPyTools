@@ -1,6 +1,10 @@
 {% extends 'TopPage/base.html' %}
 {% load static %}
 
+<!-- タイトル -->
+{% block title %}
+  {{ object.title }}
+{% endblock %}
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
 {% endblock %}

@@ -49,13 +49,18 @@ class BlogPostDetail(DetailView):
 
 class BlogPostCreate(LoginRequiredMixin, CreateView):
     model = BlogPost
-    fields = ['title', 'content']
+    fields = ['title', 'content',]
     template_name = 'EasyMdBlog/post-form.html'
     success_url = reverse_lazy('blog-index')
+
+    def form_valid(self, form):
+        # form.instance.user に現在のログインユーザーをセット
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class BlogPostUpdate(LoginRequiredMixin, UpdateView):
     model = BlogPost
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'user']
     template_name = 'EasyMdBlog/post-form.html'
     success_url = reverse_lazy('blog-index')

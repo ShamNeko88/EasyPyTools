@@ -20,7 +20,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ post.title }}</h5>
           <p class="card-text">
-            <small class="text-muted">投稿日: {{ post.created_at|date:'Y/m/d' }}</small>
+            <small class="text-muted">投稿者: {{ post.user.username }} 投稿日: {{ post.created_at|date:'Y/m/d' }}</small>
           </p>
           <a href="{% url 'post-detail' post.pk %}" class="btn btn-primary">続きを読む</a>
         </div>
