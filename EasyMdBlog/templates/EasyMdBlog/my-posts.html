@@ -1,0 +1,41 @@
+{% extends 'TopPage/base.html' %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+{% endblock %}
+{% block title %}
+  マイブログ - EasyMdBlog
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>マイブログ一覧</h1>
+      <div>
+        <a href="{% url 'blog-index' %}" class="btn btn-outline-secondary me-2">全体の記事一覧</a>
+        <a href="{% url 'post-create' %}" class="btn btn-primary">新規投稿</a>
+      </div>
+    </div>
+    {% for post in posts %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <a href="{% url 'post-detail' post.pk %}" class="card-title">{{ post.title }}</a>
+              <p class="card-text">
+                <small class="text-muted">投稿日: {{ post.created_at|date:'Y/m/d' }}</small>
+              </p>
+            </div>
+            <div>
+              <a href="{% url 'post-edit' post.pk %}" class="btn btn-sm btn-outline-primary">編集</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="alert alert-info">
+        まだ投稿がありません。新規投稿ボタンから記事を書いてみましょう！
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -47,6 +47,7 @@ class BlogPostDetail(DetailView):
         return context
 
 
+# ブログの新規作成ページ
 class BlogPostCreate(LoginRequiredMixin, CreateView):
     model = BlogPost
     fields = ['title', 'content',]
@@ -59,8 +60,20 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+# ブログの編集ページ
 class BlogPostUpdate(LoginRequiredMixin, UpdateView):
     model = BlogPost
-    fields = ['title', 'content', 'user']
-    template_name = 'EasyMdBlog/post-form.html'
-    success_url = reverse_lazy('blog-index')
+    fields = ['title', 'content']
+    template_name = 'EasyMdBlog/blog-post.html'
+    success_url = reverse_lazy('my-posts')
+
+
+# マイページ（自分の投稿一覧）
+class MyBlogListView(LoginRequiredMixin, ListView):
+    model = BlogPost
+    template_name = "EasyMdBlog/my-posts.html"
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        # ログインユーザーの投稿のみを取得
+        return BlogPost.objects.filter(user=self.request.user)
