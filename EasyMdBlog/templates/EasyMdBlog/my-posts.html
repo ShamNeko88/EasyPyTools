@@ -9,11 +9,14 @@
 
 {% block content %}
   <div class="container mt-4">
+    <div class="d-flex justify-content-end mb-3">
+      <a href="{% url 'blog-index' %}" class="btn btn-primary me-2">全体の記事一覧</a>
+    </div>
+
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>マイブログ一覧</h1>
       <div>
-        <a href="{% url 'blog-index' %}" class="btn btn-outline-secondary me-2">全体の記事一覧</a>
-        <a href="{% url 'post-create' %}" class="btn btn-primary">新規投稿</a>
+        <a href="{% url 'post-create' %}" class="btn btn-outline-success">新規投稿</a>
       </div>
     </div>
     {% for post in posts %}
@@ -33,9 +36,7 @@
         </div>
       </div>
     {% empty %}
-      <div class="alert alert-info">
-        まだ投稿がありません。新規投稿ボタンから記事を書いてみましょう！
-      </div>
+      <div class="alert alert-info">まだ投稿がありません。新規投稿ボタンから記事を書いてみましょう！</div>
     {% endfor %}
   </div>
 {% endblock %}
