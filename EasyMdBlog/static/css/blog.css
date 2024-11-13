@@ -1,0 +1,42 @@
+.blog-content {
+    line-height: 1.8;
+}
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.blog-content p {
+    margin-bottom: 1.2rem;
+}
+
+.blog-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.blog-content code {
+    background-color: #f8f9fa;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.blog-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+.blog-content blockquote {
+    border-left: 4px solid #ccc;
+    margin-left: 0;
+    padding-left: 1rem;
+    color: #666;
+}

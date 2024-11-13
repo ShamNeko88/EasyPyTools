@@ -132,6 +132,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "EasyLiveMemo/static",  # EasyLiveMemoアプリのstaticディレクトリ
     BASE_DIR / "TopPage/static",  # TopPageアプリのstaticディレクトリ
+    BASE_DIR / "EasyMdBlog/static"
 ]
 
 # 本番環境用のSTATIC_ROOTを指定
@@ -141,3 +142,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 認証関連の設定
+LOGIN_REDIRECT_URL = '/'  # ログイン後のリダイレクト先
+LOGOUT_REDIRECT_URL = '/'  # ログアウト後のリダイレクト先
