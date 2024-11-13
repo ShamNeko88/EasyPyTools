@@ -17,7 +17,7 @@ class BlogIndexView(ListView):
 # ブログの詳細閲覧ページ
 class BlogPostDetail(DetailView):
     model = BlogPost
-    template_name = "EasyMdBlog/post-detail.html"
+    template_name = "EasyMdBlog/blog-detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
