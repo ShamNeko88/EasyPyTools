@@ -49,7 +49,7 @@
 .editor-container {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
 }
 
 .editor-header {
@@ -80,7 +80,7 @@
     background: #f8f9fa;
     border-radius: 8px;
     padding: 1rem;
-    margin-top: 1.5rem;
+    margin: 1.0rem;
 }
 
 .guide-item {

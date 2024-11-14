@@ -13,6 +13,13 @@ class BlogIndexView(ListView):
     template_name = "EasyMdBlog/blog-index.html"
     context_object_name = 'posts'
 
+    def get_queryset(self):
+        queryset = BlogPost.objects.all()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(title__icontains=query)
+        return queryset
+
 
 # ブログの詳細閲覧ページ
 class BlogPostDetail(DetailView):
@@ -75,5 +82,8 @@ class MyBlogListView(LoginRequiredMixin, ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        # ログインユーザーの投稿のみを取得
-        return BlogPost.objects.filter(user=self.request.user)
+        queryset = BlogPost.objects.filter(user=self.request.user)
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(title__icontains=query)
+        return queryset

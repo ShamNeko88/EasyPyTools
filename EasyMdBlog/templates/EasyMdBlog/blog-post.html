@@ -1,53 +1,56 @@
-{% extends 'TopPage/base.html' %}
+{% extends 'EasyMdBlog/blog-base.html' %}
 {% load static %}
 
 {% block title %}
-  {% if form.instance.pk %}記事の編集{% else %}新規投稿{% endif %} - EasyMdBlog
+  {% if form.instance.pk %}
+    記事の編集
+  {% else %}
+    新規投稿
+  {% endif %}- EasyMdBlog
 {% endblock %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
 {% endblock %}
 
-{% block content %}
-<div class="container mt-5">
-  <div class="editor-container">
-    <div class="editor-header">
-      <h2 class="mb-0">{% if form.instance.pk %}記事の編集{% else %}新規投稿{% endif %}</h2>
-    </div>
-    <div class="editor-body">
-      <form method="post">
-        {% csrf_token %}
-        <div class="mb-4">
-          <label for="{{ form.title.id_for_label }}" class="form-label">タイトル</label>
-          <input type="text" name="title" class="form-control" id="{{ form.title.id_for_label }}" 
-                 value="{{ form.title.value|default:'' }}" required>
+{% block blog_main %}
+  <div class="container mt-5">
+    <div class="editor-container">
+      <div class="d-flex align-items-center editor-header">
+        <h2 class="mb-0">
+          {% if form.instance.pk %}
+            記事の編集
+          {% else %}
+            新規投稿
+          {% endif %}
+        </h2>
+        <button type="submit" class="btn btn-primary px-4 ml-auto">投稿する</button>
+      </div>
+      <div class="markdown-guide">
+        <h5 class="mb-3">マークダウン記法</h5>
+        <div>
+          <span class="guide-item">## 見出し2</span>
+          <span class="guide-item">### 見出し3</span>
+          <span class="guide-item">**太字**</span>
+          <span class="guide-item">`コード`</span>
+          <span class="guide-item">- リスト</span>
+          <span class="guide-item">[リンク](URL)</span>
+          <span class="guide-item">> 引用</span>
         </div>
-        <div class="mb-4">
-          <label for="{{ form.content.id_for_label }}" class="form-label">本文</label>
-          <textarea name="content" class="form-control" id="{{ form.content.id_for_label }}" 
-                    required>{{ form.content.value|default:'' }}</textarea>
-        </div>
-
-        <div class="markdown-guide">
-          <h5 class="mb-3">マークダウン記法</h5>
-          <div>
-            <span class="guide-item">## 見出し2</span>
-            <span class="guide-item">### 見出し3</span>
-            <span class="guide-item">**太字**</span>
-            <span class="guide-item">`コード`</span>
-            <span class="guide-item">- リスト</span>
-            <span class="guide-item">[リンク](URL)</span>
-            <span class="guide-item">> 引用</span>
+      </div>
+      <div class="editor-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-4">
+            <label for="{{ form.title.id_for_label }}" class="form-label">タイトル</label>
+            <input type="text" name="title" class="form-control" id="{{ form.title.id_for_label }}" value="{{ form.title.value|default:'' }}" required />
           </div>
-        </div>
-
-        <div class="d-flex justify-content-end gap-2 mt-4">
-          <a href="{% url 'blog-index' %}" class="btn btn-outline-secondary">キャンセル</a>
-          <button type="submit" class="btn btn-primary px-4">投稿する</button>
-        </div>
-      </form>
+          <div class="mb-4">
+            <label for="{{ form.content.id_for_label }}" class="form-label">本文</label>
+            <textarea name="content" class="form-control" id="{{ form.content.id_for_label }}" required>{{ form.content.value|default:'' }}</textarea>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 {% endblock %}

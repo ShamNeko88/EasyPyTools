@@ -1,4 +1,4 @@
-{% extends 'TopPage/base.html' %}
+{% extends 'EasyMdBlog/blog-base.html' %}
 {% load static %}
 
 <!-- タイトル -->
@@ -9,16 +9,16 @@
   <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
 {% endblock %}
 
-{% block content %}
-  <div class="container mt-4">
+{% block blog_main %}
+  <div class="container mt-4 shadow rounded">
     <div class="row">
       <div class="col-12">
         <article class="blog-post">
-          <header class="mb-4">
+          <header class="mb-4 mt-2">
             <h1>{{ object.title }}</h1>
             <div class="text-muted">
               <small>
-                投稿日: {{ object.created_at|date:'Y年m月d日' }}
+                作成者:{{ object.user.username }} 投稿日: {{ object.created_at|date:'Y年m月d日' }}
                 {% if object.updated_at != object.created_at %}
                   | 更新日: {{ object.updated_at|date:'Y年m月d日' }}
                 {% endif %}
