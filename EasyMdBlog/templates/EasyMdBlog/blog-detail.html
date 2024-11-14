@@ -1,32 +1,31 @@
-{% extends 'TopPage/base.html' %}
+{% extends 'EasyMdBlog/blog-base.html' %}
 {% load static %}
 
+<!-- タイトル -->
+{% block title %}
+  {{ object.title }}
+{% endblock %}
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
 {% endblock %}
 
-{% block content %}
-  <div class="container mt-4">
+{% block blog_main %}
+  <div class="container mt-4 shadow rounded">
     <div class="row">
       <div class="col-12">
         <article class="blog-post">
-          <header class="mb-4">
-            <h1>{{ object.title }}</h1>
-            <div class="text-muted">
+          <header class="mb-4 mt-2">
+            <h2>{{ object.title }}</h2>
+            <div class="text-muted border-bottom pb-2">
               <small>
-                投稿日: {{ object.created_at|date:'Y年m月d日' }}
+                作成者:{{ object.user.username }} 投稿日: {{ object.created_at|date:'Y年m月d日' }}
                 {% if object.updated_at != object.created_at %}
                   | 更新日: {{ object.updated_at|date:'Y年m月d日' }}
                 {% endif %}
               </small>
             </div>
           </header>
-
           <div class="blog-content markdown-body mb-4">{{ content|safe }}</div>
-
-          <div class="blog-actions">
-            <a href="{% url 'blog-index' %}" class="btn btn-outline-secondary">記事一覧に戻る</a>
-          </div>
         </article>
       </div>
     </div>

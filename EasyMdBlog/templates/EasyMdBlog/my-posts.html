@@ -1,0 +1,40 @@
+{% extends 'EasyMdBlog/blog-base.html' %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+{% endblock %}
+{% block title %}
+  マイブログ - EasyMdBlog
+{% endblock %}
+
+{% block blog_main %}
+  <div class="container mt-4 shadow rounded p-2 bg-light">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>マイブログ一覧</h2>
+      <form class="form-inline my-1 my-lg-0" method="get" action="{% url 'my-posts' %}">
+        <input class="form-control form-control-sm" type="search" name="q" placeholder="マイブログを検索" aria-label="Search" value="{{ request.GET.q|default:'' }}" />
+      </form>
+    </div>
+
+    {% for post in posts %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <a href="{% url 'post-detail' post.pk %}" class="card-title">{{ post.title }}</a>
+              <p class="card-text">
+                <small class="text-muted">投稿日: {{ post.created_at|date:'Y/m/d' }}</small>
+              </p>
+            </div>
+            <div>
+              <a href="{% url 'post-edit' post.pk %}" class="btn btn-sm btn-outline-primary">編集</a>
+              <a href="{% url 'post-delete' post.pk %}" class="btn btn-sm btn-outline-danger">削除</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="alert alert-info">まだ投稿がありません。新規投稿ボタンから記事を書いてみましょう！</div>
+    {% endfor %}
+  </div>
+{% endblock %}

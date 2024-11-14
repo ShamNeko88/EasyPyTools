@@ -1,20 +1,68 @@
-{% extends 'TopPage/base.html' %}
+{% extends 'EasyMdBlog/blog-base.html' %}
 {% load static %}
 
-{% block content %}
-<div class="container mt-4">
-    <h2>{% if form.instance.pk %}記事の編集{% else %}新規投稿{% endif %}</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
+{% block title %}
+  {% if form.instance.pk %}
+    記事の編集
+  {% else %}
+    新規投稿
+  {% endif %}- EasyMdBlog
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.1.3/marked.min.js"></script> <!-- marked.jsの追加 -->
+{% endblock %}
+
+{% block blog_main %}
+  <div class="container mt-5">
+    <div class="editor-container">
+      <div class="d-flex align-items-center editor-header">
+        <h2 class="mb-0">
+          {% if form.instance.pk %}
+            記事の編集
+          {% else %}
+            新規投稿
+          {% endif %}
+        </h2>
+      </div>
+      <div class="editor-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-4">
             <label for="{{ form.title.id_for_label }}" class="form-label">タイトル</label>
-            {{ form.title }}
-        </div>
-        <div class="mb-3">
-            <label for="{{ form.content.id_for_label }}" class="form-label">本文（マークダウン形式）</label>
-            {{ form.content }}
-        </div>
-        <button type="submit" class="btn btn-primary">投稿する</button>
-    </form>
-</div>
+            <input type="text" name="title" class="form-control" id="{{ form.title.id_for_label }}" value="{{ form.title.value|default:'' }}" required />
+          </div>
+          <label for="{{ form.content.id_for_label }}" class="form-label">本文</label>
+          <div class="m-1 d-flex row">
+            <textarea name="content" class="form-control col-6" id="{{ form.content.id_for_label }}" required oninput="updatePreview()">{{ form.content.value|default:'' }}</textarea>
+            <div class="preview-container col-6">
+              <div id="preview" class="border p-3 markdown-body"></div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary px-4">投稿する</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updatePreview() {
+      const textarea = document.getElementById('{{ form.content.id_for_label }}')
+      const preview = document.getElementById('preview')
+      const markdownText = textarea.value
+    
+      // marked.jsを使用してマークダウンをHTMLに変換
+      const html = marked(markdownText)
+    
+      preview.innerHTML = html
+    }
+    
+    // ページが読み込まれたときにプレビューを更新
+    document.addEventListener('DOMContentLoaded', function () {
+      updatePreview()
+    })
+  </script>
 {% endblock %}
