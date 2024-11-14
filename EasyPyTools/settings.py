@@ -34,7 +34,7 @@ DEBUG = os.getenv('DEBUG') == 'True'  # .envファイルで「DEBUG=True」で�
 if DEBUG is True:
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 else:
-    ALLOWED_HOSTS = ["ShamNeko88.pythonanywhere.com"]
+    ALLOWED_HOSTS = ["ShamNeko88.pythonanywhere.com", "EasyPyTools.com"]
 
 
 # Application definition
@@ -82,15 +82,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'EasyPyTools.wsgi.application'
 
 
+# TODO: この情報gitに上げたくない
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DJANGO_ENV = os.getenv('DJANGO_ENV')
+if DJANGO_ENV == 'production':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'ShamNeko88$EasyPyTools_ProdDb',
+            'USER': 'ShamNeko88',
+            'PASSWORD': 'EASYPYTOOLbigf1139?',
+            'HOST': 'ShamNeko88.mysql.pythonanywhere-services.com',
+            'PORT': '3306',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
