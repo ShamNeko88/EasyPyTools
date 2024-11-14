@@ -33,11 +33,11 @@ class BlogPostDetail(DetailView):
         md = markdown.Markdown(extensions=['extra'])
         html = md.convert(self.object.content)
 
-        # 基本的なタグのみ許可
+        # 許可するタグ
         allowed_tags = [
             'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
             'a', 'ul', 'ol', 'li', 'code', 'pre',
-            'strong', 'em', 'blockquote'
+            'strong', 'em', 'blockquote', 'hr', 'br'
         ]
         allowed_attrs = {
             'a': ['href', 'title']
