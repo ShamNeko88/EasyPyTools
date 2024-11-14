@@ -1,0 +1,15 @@
+{% extends 'EasyMdBlog/blog-base.html' %}
+
+{% block title %}ブログ投稿の削除{% endblock %}
+
+{% block blog_main %}
+<div class="container mt-4">
+    <h2>この投稿を削除しますか？</h2>
+    <p>タイトル: {{ object.title }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">削除</button>
+        <a href="{% url 'my-posts' %}" class="btn btn-secondary">キャンセル</a>
+    </form>
+</div>
+{% endblock %}

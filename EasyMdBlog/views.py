@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import BlogPost
@@ -87,3 +87,10 @@ class MyBlogListView(LoginRequiredMixin, ListView):
         if query:
             queryset = queryset.filter(title__icontains=query)
         return queryset
+
+
+# ブログの削除
+class BlogPostDelete(LoginRequiredMixin, DeleteView):
+    model = BlogPost
+    template_name = 'EasyMdBlog/blog-delete.html'
+    success_url = reverse_lazy('my-posts')  # 削除後のリダイレクト先

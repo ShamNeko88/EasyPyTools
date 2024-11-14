@@ -48,21 +48,21 @@
     </div>
   </div>
 
-<script>
-  function updatePreview() {
-    const textarea = document.getElementById('{{ form.content.id_for_label }}');
-    const preview = document.getElementById('preview');
-    const markdownText = textarea.value;
-
-    // marked.jsを使用してマークダウンをHTMLに変換
-    const html = marked(markdownText);
-
-    preview.innerHTML = html;
-  }
-
-  // ページが読み込まれたときにプレビューを更新
-  document.addEventListener('DOMContentLoaded', function() {
-    updatePreview();
-  });
-</script>
+  <script>
+    function updatePreview() {
+      const textarea = document.getElementById('{{ form.content.id_for_label }}')
+      const preview = document.getElementById('preview')
+      const markdownText = textarea.value
+    
+      // marked.jsを使用してマークダウンをHTMLに変換
+      const html = marked(markdownText)
+    
+      preview.innerHTML = html
+    }
+    
+    // ページが読み込まれたときにプレビューを更新
+    document.addEventListener('DOMContentLoaded', function () {
+      updatePreview()
+    })
+  </script>
 {% endblock %}
