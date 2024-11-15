@@ -7,6 +7,8 @@
 {% endblock %}
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.1.3/marked.min.js"></script> <!-- marked.jsの追加 -->
+  <script src="{% static 'js/blog.js' %}"></script> <!-- 外部JavaScriptファイルの追加 -->
 {% endblock %}
 
 {% block blog_main %}
@@ -25,7 +27,7 @@
               </small>
             </div>
           </header>
-          <div class="blog-content markdown-body mb-4">{{ content|safe }}</div>
+          <div class="blog-content markdown-body mb-4" id="content-preview" data-content="{{ object.content}}"></div>
         </article>
       </div>
     </div>

@@ -2,9 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import BlogPost
-import markdown
 import bleach
-from django.utils.safestring import mark_safe
 
 
 # ブログ一覧ページ
@@ -29,28 +27,9 @@ class BlogPostDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # シンプルな設定
-        md = markdown.Markdown(extensions=['extra'])
-        html = md.convert(self.object.content)
-
-        # 許可するタグ
-        allowed_tags = [
-            'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-            'a', 'ul', 'ol', 'li', 'code', 'pre',
-            'strong', 'em', 'blockquote', 'hr', 'br'
-        ]
-        allowed_attrs = {
-            'a': ['href', 'title']
-        }
-
-        clean_html = bleach.clean(
-            html,
-            tags=allowed_tags,
-            attributes=allowed_attrs,
-            strip=True
-        )
-
-        context['content'] = mark_safe(clean_html)
+        # マークダウンをHTMLに変換せず、単純なテキストとして渡す
+        # context['content'] = self.object.content.replace('\r\n', '').replace('\n', '').replace('\r', '')  # マークダウンテキストをそのまま渡す
+        context['content'] = self.object.content
         return context
 
 
