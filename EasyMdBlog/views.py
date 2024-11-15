@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import BlogPost
+from django.utils.html import mark_safe
 import bleach
 
 
@@ -26,10 +27,14 @@ class BlogPostDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        markdown_content = self.object.content
+        # bleachを使用してHTMLをサニタイズ
+        allowed_tags = [
+            'p', 'br', 'strong', 'em', 'ul', 'ol', 'li'
+        ]
+        clean_content = bleach.clean(markdown_content, tags=allowed_tags)
 
-        # マークダウンをHTMLに変換せず、単純なテキストとして渡す
-        # context['content'] = self.object.content.replace('\r\n', '').replace('\n', '').replace('\r', '')  # マークダウンテキストをそのまま渡す
-        context['content'] = self.object.content
+        context['content'] = mark_safe(clean_content)  # Djangoのテンプレートで安全に表示
         return context
 
 
