@@ -1,34 +1,35 @@
 {% extends 'TopPage/base.html' %}
 
 {% block content %}
-<div class="container mt-4">
+  <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    新規登録
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">新規登録</div>
+          <div class="card-body">
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  {{ field }}
+                  {% if field.errors %}
+                    {% for error in field.errors %}
+                      <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
                 </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        {% for field in form %}
-                            <div class="form-group">
-                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}
-                                {% if field.errors %}
-                                    {% for error in field.errors %}
-                                        <div class="alert alert-danger">
-                                            {{ error }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                        <button type="submit" class="btn btn-primary">登録</button>
-                    </form>
-                </div>
-            </div>
+              {% endfor %}
+              <p class="text-muted">以下の条件を満たす必要があります:</p>
+              <ul class="alert alert-info">
+                <li class=" ml-2">ユーザー名は3文字以上</li>
+                <li class=" ml-2">パスワードは8文字以上</li>
+              </ul>
+              <button type="submit" class="btn btn-primary">登録</button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 {% endblock %}
