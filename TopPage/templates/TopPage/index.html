@@ -13,7 +13,7 @@
   <!-- 概要説明 -->
   <div class="container">
     <blockquote class="blockquote text-center">
-      <p class="mb-0">このサイトはシンプルで使いやすい便利ツールを提供します</p>
+      <p class="mb-0">シンプルで使いやすい便利ツールを提供します</p>
     </blockquote>
 
     <!-- カルーセルで簡易的にツール紹介 -->
@@ -22,6 +22,7 @@
         <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
       </ol>
       <div class="carousel-inner">
         <!-- EasyLiveMemo -->
@@ -32,6 +33,17 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5" />
               </svg>EasyMdBlog
+            </p>
+          </div>
+        </div>
+        <!-- EasyTaskManager -->
+        <div class="carousel-item">
+          <div class="d-block w-100 text-center">
+            <p class="lead">シンプルなタスク管理アプリ</p>
+            <p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5" />
+              </svg>EasyTaskManager
             </p>
           </div>
         </div>
@@ -82,6 +94,19 @@
               <li>誰でも簡単にブログを作成</li>
             </ul>
             <a href="{% url 'blog-index' %}" class="btn-sm btn-primary">今すぐ使う</a>
+          </div>
+        </div>
+      </div>
+      <!-- EasyTaskManager -->
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-header">EasyTaskManager</div>
+          <div class="card-body">
+            <ul>
+              <li>シンプルなタスク管理アプリ</li>
+              <li>タスクとアイデアを管理</li>
+            </ul>
+            <a href="#" class="btn-sm btn-primary">Coming soon</a>
           </div>
         </div>
       </div>
