@@ -1,9 +1,10 @@
 from django import forms
-from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm  # パスワードハッシュの自動化等
+from django.core.validators import MinLengthValidator
 
 
-class UserRegistrationForm(forms.ModelForm):
+class UserRegistrationForm(UserCreationForm):
     username = forms.CharField(
         label="ユーザー名",
         max_length=50,
@@ -14,12 +15,7 @@ class UserRegistrationForm(forms.ModelForm):
             'min_length': 'ユーザー名は3文字以上である必要があります。',
         }
     )
-    password = forms.CharField(
-        widget=forms.PasswordInput,
-        validators=[MinLengthValidator(8)],  # 8文字以上のバリデーション
-        label="パスワード"
-    )
 
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ['username', 'password1', 'password2']  # UserCreationFormのフィールドを使用
