@@ -16,5 +16,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('TopPage.urls')),
     path('EasyMdBlog/', include('EasyMdBlog.urls')),
-    path('EasyLiveMemo/', include('EasyLiveMemo.urls'))
+    path('EasyLiveMemo/', include('EasyLiveMemo.urls')),
+    path('tasks/', include('EasyTaskManager.urls'))
 ]

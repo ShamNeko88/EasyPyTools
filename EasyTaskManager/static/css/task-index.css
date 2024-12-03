@@ -1,0 +1,12 @@
+.card {
+    padding: 1px; /* パディングを調整 */
+    margin-bottom: 1px; /* カード間のマージンを調整 */
+}
+
+.card-title {
+    font-size: 1.25rem; /* タイトルのフォントサイズを調整 */
+}
+
+.card-text {
+    font-size: 1.0rem; /* テキストのフォントサイズを調整 */
+}

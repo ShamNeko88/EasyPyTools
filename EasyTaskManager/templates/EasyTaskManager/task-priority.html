@@ -1,0 +1,36 @@
+{% extends 'EasyTaskManager/task-base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/task-index.css' %}" />
+{% endblock %}
+
+{% block title %}
+  EasyTaskManager
+{% endblock %}
+
+{% block task_main %}
+  <div class="container mt-4 shadow rounded p-2 bg-light">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>優先タスク</h2>
+      <form method="post" class="mb-3">
+        {% csrf_token %}
+        <label for="id_title">タイトル:</label>
+        {{ form.title }}
+        <button type="submit" class="btn btn-primary btn-sm ml-2">追加</button>
+      </form>
+    </div>
+
+    <div id="all" class="task-section">
+      {% for task in tasks %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <a href="#" class="card-title">{{ task.title }}</a>
+          </div>
+        </div>
+      {% empty %}
+        <p>タスクはありません。</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

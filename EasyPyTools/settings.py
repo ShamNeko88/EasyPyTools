@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'TopPage',
+    'EasyTaskManager',
     'EasyLiveMemo',
     'EasyMdBlog'
 ]
@@ -141,9 +142,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 # アプリ内の静的ファイルをDjangoに認識させる
 STATICFILES_DIRS = [
-    BASE_DIR / "EasyLiveMemo/static",  # EasyLiveMemoアプリのstaticディレクトリ
     BASE_DIR / "TopPage/static",  # TopPageアプリのstaticディレクトリ
-    BASE_DIR / "EasyMdBlog/static"
+    BASE_DIR / "EasyLiveMemo/static",  # EasyLiveMemoアプリのstaticディレクトリ
+    BASE_DIR / "EasyMdBlog/static",
+    BASE_DIR / "EasyTaskManager"
 ]
 
 # 本番環境用のSTATIC_ROOTを指定

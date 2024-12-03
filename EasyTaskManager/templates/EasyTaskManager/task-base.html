@@ -1,0 +1,36 @@
+{% extends 'TopPage/base.html' %}
+{% load static %}
+{% comment %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+{% endblock %}
+{% endcomment %}
+{% block title %}
+  EasyTaskManager
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-2">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+      <!-- ハンバーガーメニューのトグルボタン -->
+      <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#blogBarDropdown" aria-controls="blogBarDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse order-2" id="blogBarDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+              <a href="{% url 'task-index' %}" class="nav-link">タスク一覧</a>
+            </li>
+          <li class="nav-item">
+            <a href="{% url 'task-priority' %}" class="nav-link">優先タスク</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'login' %}?next={% url 'post-create' %}" class="nav-link">思考中</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  {% block task_main %}
+
+  {% endblock %}
+{% endblock %}
