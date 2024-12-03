@@ -6,26 +6,31 @@
 {% endblock %}
 
 {% block title %}
-  EasyTaskManager
+  タスク管理
 {% endblock %}
 
 {% block task_main %}
   <div class="container mt-4 shadow rounded p-2 bg-light">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>タスク一覧</h2>
-      <form method="post" class="mb-3">
-        {% csrf_token %}
-        <label for="id_title">タイトル:</label>
-        {{ form.title }}
-        <button type="submit" class="btn btn-primary btn-sm ml-2">追加</button>
-      </form>
-    </div>
+    <h2>タスク一覧</h2>
 
     <div id="all" class="task-section">
+      <h3>全てのタスク</h3>
       {% for task in tasks %}
         <div class="card mb-3">
           <div class="card-body">
             <a href="#" class="card-title">{{ task.title }}</a>
+            <p class="card-text">
+              <small class="text-muted">作成日: {{ task.created_at|date:'Y/m/d' }}</small>
+            </p>
+            <form class="task-update-form" data-task-id="{{ task.id }}">
+              <label for="id_is_completed">完了:</label>
+              <input type="checkbox" name="is_completed" {% if task.is_completed %}checked{% endif %}>
+              <label for="id_is_priority">優先タスク:</label>
+              <input type="checkbox" name="is_priority" {% if task.is_priority %}checked{% endif %}>
+              <label for="id_is_idea">思考中:</label>
+              <input type="checkbox" name="is_idea" {% if task.is_idea %}checked{% endif %}>
+              <button type="submit" class="btn btn-secondary btn-sm">更新</button>
+            </form>
           </div>
         </div>
       {% empty %}
@@ -33,4 +38,30 @@
       {% endfor %}
     </div>
   </div>
+
+  <script>
+    document.querySelectorAll('.task-update-form').forEach(form => {
+      form.addEventListener('submit', function(event) {
+        event.preventDefault(); // デフォルトの送信を防ぐ
+        const taskId = this.getAttribute('data-task-id');
+        const formData = new FormData(this);
+
+        fetch(`/tasks/update/${taskId}/`, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}' // CSRFトークンをヘッダーに追加
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            console.log('タスクが更新されました。');
+          } else {
+            console.error('更新に失敗しました。');
+          }
+        });
+      });
+    });
+  </script>
 {% endblock %}

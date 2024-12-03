@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .models import Task
 from .forms import TaskForm
+from django.http import JsonResponse  # AJAX
 
 
 class TaskManagerView(View):
@@ -28,6 +29,16 @@ class TaskManagerView(View):
             task.save()
             return redirect('task-index')  # タスク管理ページにリダイレクト
         return self.get(request)  # エラーがあれば再表示
+
+
+class TaskUpdateView(View):
+    def post(self, request, task_id):
+        task = Task.objects.get(id=task_id, user=request.user)
+        task.is_completed = request.POST.get('is_completed') == 'on'
+        task.is_priority = request.POST.get('is_priority') == 'on'
+        task.is_idea = request.POST.get('is_idea') == 'on'
+        task.save()
+        return JsonResponse({'success': True})
 
 
 # 優先タスク
