@@ -61,4 +61,25 @@ class TaskPriorityView(View):
             task.save()
             return redirect('task-priority')  # 優先タスクページにリダイレクト
         return self.get(request)  # エラーがあれば再表示
-    
+
+
+# 思考中
+class TaskIdeaView(View):
+    def get(self, request):
+        # ユーザーの思考中のタスクを取得
+        idea_tasks = Task.objects.filter(user=request.user, is_idea=True)
+        form = TaskForm()
+
+        return render(request, 'EasyTaskManager/task-idea.html', {
+            'tasks': idea_tasks,
+            'form': form,
+        })
+
+    def post(self, request):
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.user = request.user  # ユーザーを設定
+            task.save()
+            return redirect('task-priority')  # 優先タスクページにリダイレクト
+        return self.get(request)  # エラーがあれば再表示

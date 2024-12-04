@@ -1,31 +1,41 @@
 {% extends 'EasyTaskManager/task-base.html' %}
 {% load static %}
 
+<!-- 追加のcssファイル-->
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/task-index.css' %}" />
-{% endblock %}
+{% endblock extra_css%}
+
+<!-- 追加のjsファイル-->
+{% block extra_js %}
+<script>
+    const csrfToken = '{{ csrf_token }}';
+</script>
+<script src="{% static 'js/task-index.js' %}"></script>
+{% endblock extra_js %}
 
 {% block title %}
-  EasyTaskManager
+  タスク管理
 {% endblock %}
 
 {% block task_main %}
   <div class="container mt-4 shadow rounded p-2 bg-light">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>優先タスク</h2>
-      <form method="post" class="mb-3">
-        {% csrf_token %}
-        <label for="id_title">タイトル:</label>
-        {{ form.title }}
-        <button type="submit" class="btn btn-primary btn-sm ml-2">追加</button>
-      </form>
-    </div>
+    <h2>優先タスク</h2>
 
     <div id="all" class="task-section">
       {% for task in tasks %}
         <div class="card mb-3">
           <div class="card-body">
             <a href="#" class="card-title">{{ task.title }}</a>
+            <form class="task-update-form" data-task-id="{{ task.id }}">
+              {% csrf_token %} <!-- CSRFトークンを追加 -->
+              <label for="id_is_completed">完了:</label>
+              <input type="checkbox" name="is_completed" {% if task.is_completed %}checked{% endif %} class="update-checkbox" data-type="completed">
+              <label for="id_is_priority">優先:</label>
+              <input type="checkbox" name="is_priority" {% if task.is_priority %}checked{% endif %} class="update-checkbox" data-type="priority">
+              <label for="id_is_idea">思考中:</label>
+              <input type="checkbox" name="is_idea" {% if task.is_idea %}checked{% endif %} class="update-checkbox" data-type="idea" id="id_is_idea_{{ task.id }}">
+            </form>
           </div>
         </div>
       {% empty %}

@@ -1,5 +1,4 @@
 .card {
-    padding: 1px; /* パディングを調整 */
     margin-bottom: 1px; /* カード間のマージンを調整 */
 }
 
@@ -7,6 +6,11 @@
     font-size: 1.25rem; /* タイトルのフォントサイズを調整 */
 }
 
+.card-body {
+    padding: 2px;
+}
+
 .card-text {
     font-size: 1.0rem; /* テキストのフォントサイズを調整 */
 }
+
