@@ -1,3 +1,4 @@
+/* EasyTaskManager/static/css/task-index.css */
 .card {
     margin-bottom: 1px; /* カード間のマージンを調整 */
 }
@@ -13,4 +14,3 @@
 .card-text {
     font-size: 1.0rem; /* テキストのフォントサイズを調整 */
 }
-

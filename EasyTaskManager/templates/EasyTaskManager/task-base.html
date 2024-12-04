@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container mt-2">
+  {% comment %} <div class="container mt-2">
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
       <!-- ハンバーガーメニューのトグルボタン -->
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#blogBarDropdown" aria-controls="blogBarDropdown" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -28,7 +28,7 @@
         </ul>
       </div>
     </nav>
-  </div>
+  </div> {% endcomment %}
 
   {% block task_main %}
 

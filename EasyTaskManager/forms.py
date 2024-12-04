@@ -1,11 +1,9 @@
+# EasyTaskManager/forms.py
+
 from django import forms
 from .models import Task
-
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'due_date', 'is_idea']
-        widgets = {
-            'description': forms.Textarea(attrs={'rows': 4}),
-        }
+        fields = ['title', 'priority', 'status']  # 優先度とステータスを含める
