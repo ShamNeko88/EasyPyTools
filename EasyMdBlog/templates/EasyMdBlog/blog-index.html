@@ -10,7 +10,7 @@
 {% block blog_main %}
   <div class="container mt-4 shadow rounded p-2 bg-light">
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>ブログ記事一覧</h2>
+      <h2>ブログ一覧</h2>
       <form class="form-inline my-1 my-lg-0 ml-auto" method="get" action="{% url 'blog-index' %}">
         <input class="form-control form-control-sm" type="search" name="q" placeholder="ブログを検索" aria-label="Search" value="{{ request.GET.q|default:'' }}" />
       </form>
