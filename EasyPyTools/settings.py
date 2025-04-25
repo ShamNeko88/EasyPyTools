@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'TopPage',
     'EasyLiveMemo',
-    'EasyMdBlog'
+    'EasyMdBlog',
+    'EasySurvey'
 ]
 
 MIDDLEWARE = [
