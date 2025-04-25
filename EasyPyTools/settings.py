@@ -144,7 +144,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "EasyLiveMemo/static",  # EasyLiveMemoアプリのstaticディレクトリ
     BASE_DIR / "TopPage/static",  # TopPageアプリのstaticディレクトリ
-    BASE_DIR / "EasyMdBlog/static"
+    BASE_DIR / "EasyMdBlog/static",
+    BASE_DIR / "EasySurvey/static"
 ]
 
 # 本番環境用のSTATIC_ROOTを指定

@@ -1,0 +1,19 @@
+body {
+    background-color: #007bff; /* 背景色 */
+    color: white; /* テキスト色 */
+}
+
+.container {
+    background-color: #0056b3; /* コンテナの背景色 */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}

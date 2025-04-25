@@ -1,12 +1,38 @@
 {% extends 'TopPage/base.html' %}
 {% load static %}
 
-
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+<link rel="stylesheet" href="{% static 'css/survey.css' %}" />
 {% endblock %}
-
 
 {% block title %}
   EasySurvey
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="title">タイトル</label>
+            <input type="text" class="form-control" id="title" placeholder="タイトルを入力">
+        </div>
+        <div class="form-group">
+            <label for="notes">備考</label>
+            <textarea class="form-control" id="notes" rows="3" placeholder="備考を入力"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="question1">質問1</label>
+            <input type="text" class="form-control" id="question1" placeholder="質問を入力">
+        </div>
+        <div class="form-group">
+            <label for="question2">質問2</label>
+            <input type="text" class="form-control" id="question2" placeholder="質問を入力">
+        </div>
+        <button type="button" class="btn btn-primary">スケジュールの作成ボタン</button>
+        <div class="form-group">
+            <label for="respondent">回答者指定</label>
+            <input type="text" class="form-control" id="respondent" placeholder="回答者を指定">
+        </div>
+    </form>
+</div>
 {% endblock %}
