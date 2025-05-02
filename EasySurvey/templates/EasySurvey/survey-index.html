@@ -14,7 +14,7 @@
   <div class="container">
     <form id="survey-form">
       <div class="text-right">
-        <button type="button" class="btn btn-primary">下記内容で作成</button>
+        <button type="button" class="btn btn-success">下記内容で作成</button>
       </div>
       <!-- タイトルフォーム -->
       <div class="form-group">
@@ -33,27 +33,15 @@
           <input type="text" class="form-control" id="question1" name="questions[]" placeholder="質問を入力" />
         </div>
       </div>
-      <div class="form-group text-center">
+      <div class="form-group text-center border-bottom pb-3">
         <button type="button" id="add-question-btn" class="btn btn-secondary">＋ 質問を追加</button>
       </div>
       <!-- 回答者を事前に選択するフォーム -->
-      <div class="form-group">
-        <div class="row">
-          <div class="col">
-            <label for="respondent">回答者指定</label>
-          </div>
-          <div class="col-2"></div>
-          <div class="col">回答者一覧</div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <input type="text" class="form-control" id="respondent" placeholder="日本 太郎" />
-          </div>
-          <dev class="col-2">
-            <button type="button" id="add-question-btn" class="btn btn-secondary">＋ 回答者を追加</button>
-          </dev>
-          <div class="col">・・・</div>
-        </div>
+      <div id="responders-container">
+        <label>回答者</label>
+      </div>
+      <div class="form-group text-center">
+        <button type="button" id="add-responder-btn" class="btn btn-secondary">＋ 回答者を追加</button>
       </div>
     </form>
   </div>
