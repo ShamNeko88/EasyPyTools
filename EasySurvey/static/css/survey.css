@@ -1,14 +1,18 @@
+/* 画面全体のスタイル */
 body {
-    background-color: #007bff; /* 背景色 */
-    color: white; /* テキスト色 */
+    background-color: #ffffff; /* 背景色 */
+    color: rgb(0, 0, 0); /* テキスト色 */
 }
 
+/* 本体のスタイル */
 .container {
-    background-color: #0056b3; /* コンテナの背景色 */
+    background-color: #f8f9fa; /* コンテナの背景色 */
     padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
 }
+
 
 h1 {
     text-align: center;
