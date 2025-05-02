@@ -1,0 +1,38 @@
+{% extends 'TopPage/base.html' %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/survey.css' %}" />
+{% endblock %}
+{% block title %}
+  EasySurvey
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/survey.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class="container p-1">
+    <nav class="navbar navbar-light bg-light">
+      <ul class="navbar-nav d-flex flex-row">
+        <li class="nav-item mx-2">
+          <a href="{% url 'survey-index' %}" class="nav-link">新規作成</a>
+        </li>
+
+        {% if user.is_authenticated %}
+          <li class="nav-item mx-2">
+            <a href="#" class="nav-link">作成済み一覧</a>
+          </li>
+        {% else %}
+          <li class="nav-item mx-2">
+            <a href="{% url 'login' %}?next={% url 'survey-index' %}" class="nav-link">作成済み一覧</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+
+  {% block survey_main %}
+
+  {% endblock %}
+{% endblock %}
