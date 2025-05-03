@@ -1,0 +1,21 @@
+<!-- アンケート回答ページ -->
+{% extends 'EasySurvey/survey-base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/survey.css' %}" />
+{% endblock %}
+
+{% block title %}
+  EasySurvey
+{% endblock %}
+
+{% block survey_main %}
+  <div class="container">
+    <h1>test</h1>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/survey.js' %}"></script>
+{% endblock %}

@@ -1,8 +1,10 @@
 from django.urls import path
 from .views import (
-    SurveyIndexView
+    SurveyIndexView,
+    SurveyAnswerView
 )
 
 urlpatterns = [
-    path("", SurveyIndexView.as_view(), name="survey-index")
+    path("", SurveyIndexView.as_view(), name="survey-index"),
+    path("survey-answer", SurveyAnswerView.as_view(), name="survey-answer")
 ]
