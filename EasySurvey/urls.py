@@ -6,5 +6,5 @@ from .views import (
 
 urlpatterns = [
     path("", SurveyIndexView.as_view(), name="survey-index"),
-    path("survey-answer", SurveyAnswerView.as_view(), name="survey-answer")
+    path("answer/<str:access_token>/", SurveyAnswerView.as_view(), name="survey-answer"),
 ]

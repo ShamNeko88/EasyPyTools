@@ -8,4 +8,7 @@ from .models import TrnSurvey, TrnSurveyQuestion, TrnSurveyAnswer
 # Register your models here.
 admin.site.register(TrnSurvey)
 admin.site.register(TrnSurveyQuestion)
-admin.site.register(TrnSurveyAnswer)
+
+@admin.register(TrnSurveyAnswer)
+class TrnSurveyAnswerAdmin(admin.ModelAdmin):
+    list_display = ('responder', 'survey_id', 'question_id', 'answer', 'created_at')

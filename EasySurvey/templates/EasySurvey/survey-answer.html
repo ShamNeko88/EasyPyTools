@@ -11,9 +11,25 @@
 {% endblock %}
 
 {% block survey_main %}
-  <div class="container">
-    <h1>test</h1>
-  </div>
+<div class="container">
+    <h1>{{ survey.title }}</h1>
+    <p>{{ survey.detail }}</p>
+    <form id="answer-form" method="post">
+        {% csrf_token %}
+        <!-- 回答者名の入力フィールド -->
+        <div class="form-group">
+            <label for="responder">回答者名</label>
+            <input type="text" class="form-control" id="responder" name="responder" placeholder="回答者名を入力" required>
+        </div>
+        {% for question in questions %}
+            <div class="form-group">
+                <label for="question_{{ question.question_id }}">{{ question.question }}</label>
+                <input type="text" class="form-control" id="question_{{ question.question_id }}" name="question_{{ question.question_id }}" required>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">回答を送信</button>
+    </form>
+</div>
 {% endblock %}
 
 {% block extra_js %}

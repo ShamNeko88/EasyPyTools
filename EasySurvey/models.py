@@ -43,12 +43,15 @@ class TrnSurveyAnswer(models.Model):
         TrnSurveyQuestion, on_delete=models.CASCADE, db_column="question_id"
     )  # 外部キー
     answer_id = models.AutoField(primary_key=True)  # 主キー
+    responder = models.CharField(max_length=50)
     answer = models.CharField(max_length=1)  # 回答内容
+    comment = models.TextField(null=True)  # コメント（オプション）
     created_at = models.DateTimeField(auto_now_add=True)  # 作成日時
     updated_at = models.DateTimeField(auto_now=True)  # 更新日時
 
     class Meta:
         db_table = 'TRN_SURVEY_ANSWER'  # 実際のDBテーブル名を指定
+        unique_together = ('survey_id', 'question_id', 'responder')  # 一意性を確保
 
     def __str__(self):
         return self.answer_id
