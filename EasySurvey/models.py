@@ -19,7 +19,9 @@ class TrnSurvey(models.Model):
 
 # アンケート内設問
 class TrnSurveyQuestion(models.Model):
-    survey_id = models.ForeignKey(TrnSurvey, on_delete=models.CASCADE, db_column="survey_id")  # 外部キー
+    survey_id = models.ForeignKey(
+        TrnSurvey, on_delete=models.CASCADE, db_column="survey_id"
+    )  # 外部キー
     question_id = models.AutoField(primary_key=True)  # 主キー
     question = models.CharField(max_length=100)  # 設問内容
     created_at = models.DateTimeField(auto_now_add=True)  # 作成日時
@@ -34,8 +36,12 @@ class TrnSurveyQuestion(models.Model):
 
 # アンケート回答
 class TrnSurveyAnswer(models.Model):
-    survey_id = models.ForeignKey(TrnSurvey, on_delete=models.CASCADE, db_column="survey_id")  # 外部キー
-    question_id = models.ForeignKey(TrnSurveyQuestion, on_delete=models.CASCADE, db_column="question_id")  # 外部キー
+    survey_id = models.ForeignKey(
+        TrnSurvey, on_delete=models.CASCADE, db_column="survey_id"
+    )  # 外部キー
+    question_id = models.ForeignKey(
+        TrnSurveyQuestion, on_delete=models.CASCADE, db_column="question_id"
+    )  # 外部キー
     answer_id = models.AutoField(primary_key=True)  # 主キー
     answer = models.CharField(max_length=1)  # 回答内容
     created_at = models.DateTimeField(auto_now_add=True)  # 作成日時
