@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 
 
 # アンケートヘッダ
@@ -11,7 +12,7 @@ class TrnSurvey(models.Model):
     updated_at = models.DateTimeField(auto_now=True)  # 更新日時
 
     class Meta:
-        db_table = 'TRN_SURVEY'  # 実際のDBテーブル名を指定
+        db_table = "TRN_SURVEY"  # 実際のDBテーブル名を指定
 
     def __str__(self):
         return self.title
@@ -28,7 +29,7 @@ class TrnSurveyQuestion(models.Model):
     updated_at = models.DateTimeField(auto_now=True)  # 更新日時
 
     class Meta:
-        db_table = 'TRN_SURVEY_QUESTION'  # 実際のDBテーブル名を指定
+        db_table = "TRN_SURVEY_QUESTION"  # 実際のDBテーブル名を指定
 
     def __str__(self):
         return self.survey_id
@@ -50,8 +51,14 @@ class TrnSurveyAnswer(models.Model):
     updated_at = models.DateTimeField(auto_now=True)  # 更新日時
 
     class Meta:
-        db_table = 'TRN_SURVEY_ANSWER'  # 実際のDBテーブル名を指定
-        unique_together = ('survey_id', 'question_id', 'responder')  # 一意性を確保（複合主キーのようなもの）
+        db_table = "TRN_SURVEY_ANSWER"  # 実際のDBテーブル名を指定
+        # ユニーク制約を追加
+        constraints = [
+            UniqueConstraint(
+                fields=["survey_id", "question_id", "responder"],
+                name="unique_survey_question_responder"  # ユニーク制約の名前
+            )
+        ]
 
     def __str__(self):
         return self.answer_id
