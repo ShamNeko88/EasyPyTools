@@ -56,21 +56,26 @@ class SurveyAnswerView(View):
 
         context = {
             'survey': survey,
-            'questions': questions,
+            'questions': questions
         }
         return render(request, self.template_name, context)
 
+    # POSTメソッドで回答を保存
     def post(self, request, *args, **kwargs):
         access_token = kwargs.get('access_token')
         survey = get_object_or_404(TrnSurvey, access_token=access_token)
         questions = TrnSurveyQuestion.objects.filter(survey_id=survey)
 
-        responder_name = request.POST.get('responder')
+        # フロントエンドから送信されたデータを取得
+        responder_name = request.POST.get('responder')  # 回答者名
+        # バリデーション
         if not responder_name:
             return JsonResponse({'error': '回答者名は必須です。'}, status=400)
 
+        # 各質問に対する回答とコメントを取得
         for question in questions:
-            answer_text = request.POST.get(f'question_{question.question_id}')
+            answer_text = request.POST.get(f'question_{question.question_id}')  # 回答を取得
+            comment_text = request.POST.get(f'comment_{question.question_id}', '')  # コメントを取得
             if answer_text:
                 # データを更新または作成
                 TrnSurveyAnswer.objects.update_or_create(
@@ -79,6 +84,7 @@ class SurveyAnswerView(View):
                     responder=responder_name,
                     defaults={
                         'answer': answer_text,
+                        'comment': comment_text,  # コメントを保存
                         'updated_at': timezone.now(),  # 更新日時を更新
                     }
                 )

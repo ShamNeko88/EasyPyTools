@@ -4,6 +4,7 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/survey.css' %}" />
+  <style></style>
 {% endblock %}
 
 {% block title %}
@@ -11,25 +12,39 @@
 {% endblock %}
 
 {% block survey_main %}
-<div class="container">
+  <div class="container">
     <h1>{{ survey.title }}</h1>
-    <p>{{ survey.detail }}</p>
+    <div class="mb-4">
+      <p>{{ survey.detail }}</p>
+    </div>
     <form id="answer-form" method="post">
-        {% csrf_token %}
-        <!-- 回答者名の入力フィールド -->
+      {% csrf_token %}
+      <!-- 回答者名の入力フィールド -->
+      <div class="form-group">
+        <label for="responder">回答者名</label>
+        <input type="text" class="form-control" id="responder" name="responder" placeholder="回答者名を入力" required />
+      </div>
+      <!-- 質問内容の表示とラジオボタン表示 -->
+      {% for question in questions %}
         <div class="form-group">
-            <label for="responder">回答者名</label>
-            <input type="text" class="form-control" id="responder" name="responder" placeholder="回答者名を入力" required>
+          <hr />
+          <p>{{ question.question }}</p>
+          <div class="radio-group">
+            <input type="radio" id="question_{{ question.question_id }}_1" name="question_{{ question.question_id }}" value="1" required />
+            <label for="question_{{ question.question_id }}_1">〇</label>
+
+            <input type="radio" id="question_{{ question.question_id }}_2" name="question_{{ question.question_id }}" value="2" />
+            <label for="question_{{ question.question_id }}_2">△</label>
+
+            <input type="radio" id="question_{{ question.question_id }}_3" name="question_{{ question.question_id }}" value="3" />
+            <label for="question_{{ question.question_id }}_3">×</label>
+          </div>
+          <textarea class="form-control mt-2" name="comment_{{ question.question_id }}" rows="3" placeholder="コメントを入力してください（オプション）"></textarea>
         </div>
-        {% for question in questions %}
-            <div class="form-group">
-                <label for="question_{{ question.question_id }}">{{ question.question }}</label>
-                <input type="text" class="form-control" id="question_{{ question.question_id }}" name="question_{{ question.question_id }}" required>
-            </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">回答を送信</button>
+      {% endfor %}
+      <button type="submit" class="btn btn-success">回答を送信</button>
     </form>
-</div>
+  </div>
 {% endblock %}
 
 {% block extra_js %}
