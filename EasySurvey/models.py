@@ -51,7 +51,7 @@ class TrnSurveyAnswer(models.Model):
 
     class Meta:
         db_table = 'TRN_SURVEY_ANSWER'  # 実際のDBテーブル名を指定
-        unique_together = ('survey_id', 'question_id', 'responder')  # 一意性を確保
+        unique_together = ('survey_id', 'question_id', 'responder')  # 一意性を確保（複合主キーのようなもの）
 
     def __str__(self):
         return self.answer_id
