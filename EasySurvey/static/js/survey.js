@@ -77,3 +77,43 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+/**
+ * アンケートの送信ボタンのクリックイベントを処理する
+ * 
+ * 流れ↓
+ * ページが読み込まれると、DOMContentLoadedイベントが発火。
+ * 「送信ボタン」がクリックされると、フォームデータを収集。
+ * fetchを使って非同期でサーバーにデータを送信。
+ * サーバーからのレスポンスを処理し、成功またはエラーのメッセージを表示。
+ * 必要に応じてページをリロード。
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    const submitSurveyBtn = document.getElementById("submit-survey-btn");
+    const surveyForm = document.getElementById("survey-form");
+
+    submitSurveyBtn.addEventListener("click", function () {
+        // フォームオブジェクト作成（データの取得）
+        const formData = new FormData(surveyForm);
+
+        // 非同期リクエストを送信
+        fetch("", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert(data.message);
+                    window.location.reload();
+                }
+            })
+            .catch((error) => console.error("Error:", error));
+    });
+});

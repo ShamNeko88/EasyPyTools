@@ -11,19 +11,20 @@
 
 {% block survey_main %}
   <div class="container">
-    <form id="survey-form">
+    <form id="survey-form" method="post">
+      {% csrf_token %}
       <div class="text-right">
-        <button type="button" class="btn btn-success">下記内容で作成</button>
+        <button type="button" id="submit-survey-btn" class="btn btn-success">下記内容で作成</button>
       </div>
       <!-- タイトルフォーム -->
       <div class="form-group">
         <label for="title">タイトル</label>
-        <input type="text" class="form-control" id="title" placeholder="タイトルを入力" required />
+        <input type="text" class="form-control" id="title" name="title" placeholder="タイトルを入力" required />
       </div>
       <!-- 備考フォーム -->
       <div class="form-group">
         <label for="notes">備考</label>
-        <textarea class="form-control" id="notes" rows="3" placeholder="備考を入力"></textarea>
+        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="備考を入力"></textarea>
       </div>
       <!-- 質問内容フォーム -->
       <div id="questions-container">
@@ -35,7 +36,7 @@
       <div class="form-group text-center border-bottom pb-3">
         <button type="button" id="add-question-btn" class="btn btn-secondary">＋ 質問を追加</button>
       </div>
-      <!-- 回答者を事前に選択するフォーム -->
+<!-- 回答者を事前に選択するフォーム -->
       <div id="responders-container">
         <label>回答者の初期設定</label>
       </div>

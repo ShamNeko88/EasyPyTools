@@ -52,4 +52,3 @@ class TrnSurveyAnswer(models.Model):
 
     def __str__(self):
         return self.answer_id
-
