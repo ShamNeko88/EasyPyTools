@@ -37,47 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-/**
- * 回答者を追加ボタンのクリックイベントを処理する
- * 回答者を回答者一覧に追加する為の関数
- */
-document.addEventListener("DOMContentLoaded", function () {
-    // 回答者追加ボタンの取得
-    const addResponderBtn = document.getElementById("add-responder-btn");
-    // 回答者を追加するためのコンテナの取得
-    const respondersContainer = document.getElementById("responders-container");
-
-    // 回答者追加ボタンがクリックされたときの処理
-    let responderCount = 1; // 現在の回答者数をカウントする変数
-    addResponderBtn.addEventListener("click", function () {
-        responderCount++;
-        // 新しい回答者のHTMLを作成
-        const newResponderDiv = document.createElement("div");
-        // あたらしい回答者のdivにクラスを追加（bootstrap）
-        newResponderDiv.classList.add(
-            "form-group",
-            "d-flex",
-            "align-items-center",
-            "mb-2"
-        );
-        // 新しい回答者のHTMLを設定
-        newResponderDiv.innerHTML = `
-            <input type="text" class="form-control mr-2" id="responder${responderCount}" name="responders[]" placeholder="回答者名を入力" style="flex: 1;">
-            <button type="button" class="btn btn-danger remove-responder-btn">削除</button>
-        `;
-        // 回答者を追加するコンテナに新しい回答者を追加
-        respondersContainer.appendChild(newResponderDiv);
-
-        // 削除ボタンのクリックイベントを追加
-        const removeBtn = newResponderDiv.querySelector(
-            ".remove-responder-btn"
-        );
-        removeBtn.addEventListener("click", function () {
-            respondersContainer.removeChild(newResponderDiv);
-        });
-    });
-});
-
 
 /**
  * アンケートの送信ボタンのクリックイベントを処理する
