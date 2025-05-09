@@ -1,0 +1,30 @@
+{% extends 'EasySurvey/survey-base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/survey.css' %}" />
+{% endblock %}
+
+{% block title %}
+  アンケート結果
+{% endblock %}
+
+{% block survey_main %}
+<div class="container">
+    <h1>{{ survey.title }}</h1>
+    <p>{{ survey.detail }}</p>
+    <hr>
+    {% for result in results %}
+        <div class="mb-4">
+            <h4>{{ result.question }}</h4>
+            <ul>
+                {% for answer in result.answers %}
+                    <li>
+                        回答: {{ answer.answer }} - {{ answer.count }}件
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
