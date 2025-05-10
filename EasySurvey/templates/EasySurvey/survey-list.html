@@ -26,8 +26,8 @@
               <div class="ml-md-auto">
                 <input type="hidden" readonly class="form-control mt-2" 
                        value="{{ request.scheme }}://{{ request.get_host }}{% url 'survey-answer' survey.access_token %}" 
-                       id="survey-url-{{ survey.id }}" />
-                <button class="btn-sm btn-secondary mt-2" onclick="copyToClipboard('survey-url-{{ survey.id }}')">
+                       id="survey-url-{{ survey.survey_id }}" />
+                <button class="btn-sm btn-secondary mt-2" onclick="copyToClipboard('survey-url-{{ survey.survey_id }}')">
                   回答ページのURL
                 </button>
                 <a href="{% url 'survey-delete' survey.survey_id %}" class="btn-sm btn-danger mt-2">
