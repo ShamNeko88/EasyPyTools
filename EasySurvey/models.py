@@ -8,7 +8,7 @@ from django.contrib.auth.models import User  # Userモデルをインポート
 class TrnSurvey(models.Model):
     survey_id = models.AutoField(primary_key=True)  # 主キー
     title = models.CharField(max_length=100)  # アンケートタイトル
-    detail = models.TextField(null=True)  # アンケート詳細
+    detail = models.TextField(null=True, blank=True)  # アンケート詳細
     access_token = models.CharField(max_length=36)  # アクセストークン
     created_by = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True

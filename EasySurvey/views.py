@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser
 from django.views.generic import DeleteView
+from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 
 
@@ -33,7 +34,9 @@ class SurveyIndexView(View):
             )
 
         # 作成者を設定（ログインしていない場合はNone）
-        created_by = request.user if not isinstance(request.user, AnonymousUser) else None
+        created_by = (
+            request.user if not isinstance(request.user, AnonymousUser) else None
+        )
 
         # TrnSurveyにデータを保存
         survey = TrnSurvey.objects.create(
@@ -169,9 +172,21 @@ class SurveyDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         # ログインユーザーが作成したアンケートのみ削除可能
         return self.model.objects.filter(created_by=self.request.user)
-    
+
     # 削除ページで削除するデータを使いたい
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["survey"] = self.get_object()
         return context
+
+
+class SurveyEditView(LoginRequiredMixin, UpdateView):
+    model = TrnSurvey
+    template_name = "EasySurvey/survey-edit.html"
+    fields = ["title", "detail"]  # 編集可能なフィールドを指定
+
+    def get_success_url(self):
+        # 編集後にリダイレクトするURLを指定
+        return reverse_lazy(
+            "survey-result", kwargs={"access_token": self.object.access_token}
+        )

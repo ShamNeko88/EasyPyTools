@@ -6,6 +6,7 @@ from .views import (
     SurveyListView,
     SurveyCompleteView,
     SurveyDeleteView,
+    SurveyEditView,
 )
 
 urlpatterns = [
@@ -26,4 +27,5 @@ urlpatterns = [
     ),
     path("list/", SurveyListView.as_view(), name="survey-list"),
     path("delete/<int:pk>/", SurveyDeleteView.as_view(), name="survey-delete"),
+    path("survey/<int:pk>/edit/", SurveyEditView.as_view(), name="survey-edit"),
 ]
