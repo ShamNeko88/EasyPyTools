@@ -6,42 +6,46 @@
 {% endblock %}
 
 {% block survey_main %}
-<div class="container">
+  <div class="container">
+    <div class="d-flex justify-content-end">
+      <input hidden="text" id="survey-url" value="{{ request.build_absolute_uri }}" readonly class="form-control" />
+      <button id="copy-url-btn" class="btn btn-secondary mt-2">URLをコピー</button>
+    </div>
     <h1>{{ survey.title }}</h1>
     <p>{{ survey.detail|linebreaksbr }}</p>
-    <hr>
+    <hr />
     {% for result in results %}
-        <div class="mb-4">
-            <h4>{{ result.question }}</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>回答者</th>
-                        <th>回答</th>
-                        <th>コメント</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for answer in result.answers %}
-                        <tr>
-                            <td>{{ answer.responder }}</td>
-                            <td>
-                                {% if answer.answer == "1" %}
-                                    〇
-                                {% elif answer.answer == "2" %}
-                                    △
-                                {% elif answer.answer == "3" %}
-                                    ×
-                                {% else %}
-                                    不明
-                                {% endif %}
-                            </td>
-                            <td>{{ answer.comment|default:"なし" }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+      <div class="mb-4">
+        <h4>{{ result.question }}</h4>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>回答者</th>
+              <th>回答</th>
+              <th>コメント</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for answer in result.answers %}
+              <tr>
+                <td>{{ answer.responder }}</td>
+                <td>
+                  {% if answer.answer == '1' %}
+                    〇
+                  {% elif answer.answer == '2' %}
+                    △
+                  {% elif answer.answer == '3' %}
+                    ×
+                  {% else %}
+                    不明
+                  {% endif %}
+                </td>
+                <td>{{ answer.comment|default:'なし' }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% endfor %}
-</div>
+  </div>
 {% endblock %}
