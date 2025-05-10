@@ -1,4 +1,18 @@
 /**
+ * フォーム全体でエンターキーを無効化
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("survey-form");
+    if (form) {
+        form.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // エンターキーのデフォルト動作を無効化
+            }
+        });
+    }
+});
+
+/**
  * 質問追加ボタンのクリックイベントを処理する
  * 質問を追加するための関数
  */
@@ -37,56 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-/**
- * アンケートの送信ボタンのクリックイベントを処理する
- * 
- * 流れ↓
- * ページが読み込まれると、DOMContentLoadedイベントが発火。
- * 「送信ボタン」がクリックされると、フォームデータを収集。
- * fetchを使って非同期でサーバーにデータを送信。
- * サーバーからのレスポンスを処理し、成功またはエラーのメッセージを表示。
- * 必要に応じてページをリロード。
- */
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     const submitSurveyBtn = document.getElementById("submit-survey-btn");
-//     const surveyForm = document.getElementById("survey-form");
-
-//     submitSurveyBtn.addEventListener("click", function () {
-//         // フォームオブジェクト作成（データの取得）
-//         const formData = new FormData(surveyForm);
-
-//         // 非同期リクエストを送信
-//         fetch("", {
-//             method: "POST",
-//             body: formData,
-//             headers: {
-//                 "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
-//             },
-//         })
-//             .then((response) => {
-//                 if (!response.ok) {
-//                     // レスポンスがエラーの場合
-//                     throw new Error(`HTTP error! status: ${response.status}`);
-//                 }
-//                 return response.json(); // JSON をパース
-//             })
-//             .then((data) => {
-//                 if (data.error) {
-//                     alert(data.error);
-//                 } else {
-//                     // サーバーからのリダイレクト URL を使用してページ遷移
-//                     window.location.href = data.redirect_url;
-//                 }
-//             })
-//             .catch((error) => {
-//                 console.error("Error:", error);
-//                 alert("サーバーエラーが発生しました。詳細はコンソールを確認してください。");
-//             });
-// });
-
-
 /**
  * URLコピー機能
  */
@@ -94,14 +58,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const copyButton = document.getElementById('copy-url-btn');
     const urlField = document.getElementById('survey-url');
 
-    copyButton.addEventListener('click', async function () {
-        try {
-            // Clipboard API を使用してクリップボードにコピー
-            await navigator.clipboard.writeText(urlField.value);
-            alert('URLがコピーされました: ' + urlField.value);
-        } catch (err) {
-            console.error('クリップボードへのコピーに失敗しました:', err);
-            alert('URLのコピーに失敗しました。');
-        }
-    });
+    if (copyButton && urlField) {
+        copyButton.addEventListener('click', async function () {
+            try {
+                await navigator.clipboard.writeText(urlField.value);
+                alert('URLがコピーされました: ' + urlField.value);
+            } catch (err) {
+                console.error('クリップボードへのコピーに失敗しました:', err);
+                alert('URLのコピーに失敗しました。');
+            }
+        });
+    }
 });
