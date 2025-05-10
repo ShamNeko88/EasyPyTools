@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.contrib.auth.models import User  # Userモデルをインポート
@@ -36,16 +37,16 @@ class TrnSurveyQuestion(models.Model):
         db_table = "TRN_SURVEY_QUESTION"  # 実際のDBテーブル名を指定
 
     def __str__(self):
-        return self.survey_id
+        return self.question  # 修正: 設問内容を返すように変更
 
 
 # アンケート回答
 class TrnSurveyAnswer(models.Model):
     # 回答内容の選択肢
     ANSWER_CHOICES = [
-        (1, '〇'),
-        (2, '△'),
-        (3, '×'),
+        (1, "〇"),
+        (2, "△"),
+        (3, "×"),
     ]
     survey_id = models.ForeignKey(
         TrnSurvey, on_delete=models.CASCADE, db_column="survey_id"
@@ -66,9 +67,9 @@ class TrnSurveyAnswer(models.Model):
         constraints = [
             UniqueConstraint(
                 fields=["survey_id", "question_id", "responder"],
-                name="unique_survey_question_responder"  # ユニーク制約の名前
+                name="unique_survey_question_responder",  # ユニーク制約の名前
             )
         ]
 
     def __str__(self):
-        return self.answer_id
+        return f"回答者: {self.responder}, 質問: {self.question_id.question}, 回答: {self.get_answer_display()}"

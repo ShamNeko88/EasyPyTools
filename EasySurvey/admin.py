@@ -9,6 +9,10 @@ from .models import TrnSurvey, TrnSurveyQuestion, TrnSurveyAnswer
 admin.site.register(TrnSurvey)
 admin.site.register(TrnSurveyQuestion)
 
+
 @admin.register(TrnSurveyAnswer)
 class TrnSurveyAnswerAdmin(admin.ModelAdmin):
-    list_display = ('responder', 'survey_id', 'question_id', 'answer', 'created_at')
+    list_display = (
+        "responder", "survey_id", "question_id", "answer", "created_at",
+        "updated_at", "comment"
+    )
