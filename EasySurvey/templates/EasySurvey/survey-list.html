@@ -6,22 +6,37 @@
 {% endblock %}
 
 {% block survey_main %}
-<div class="container">
+  <div class="container">
     <h2>アンケート一覧</h2>
-    <hr>
+    <hr />
     {% if created_surveys %}
-        <ul class="list-group">
-            {% for survey in created_surveys %}
-                <li class="list-group-item">
-                    <a href="{% url 'survey-result' access_token=survey.access_token %}">
-                        {{ survey.title }}
-                    </a>
-                    <span class="text-muted">（作成日: {{ survey.created_at|date:"Y-m-d" }}）</span>
-                </li>
-            {% endfor %}
-        </ul>
+      <ul class="list-group">
+        {% for survey in created_surveys %}
+          <li class="list-group-item">
+            <div class="d-flex flex-column flex-md-row align-items-md-center">
+              <!-- 作成日 -->
+              <span class="text-muted mb-2 mb-md-0">
+                {{ survey.created_at|date:'Y-m-d' }}
+              </span>
+              <!-- タイトル -->
+              <a href="{% url 'survey-result' access_token=survey.access_token %}" class="ml-md-3 mb-2 mb-md-0">
+                {{ survey.title }}
+              </a>
+              <!-- コピー機能 -->
+              <div class="ml-md-auto">
+                <input type="hidden" readonly class="form-control mt-2" 
+                       value="{{ request.scheme }}://{{ request.get_host }}{% url 'survey-answer' survey.access_token %}" 
+                       id="survey-url-{{ survey.id }}" />
+                <button class="btn-sm btn-secondary mt-2" onclick="copyToClipboard('survey-url-{{ survey.id }}')">
+                  回答ページのURL
+                </button>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
     {% else %}
-        <p>作成済みのアンケートはありません。</p>
+      <p>作成済みのアンケートはありません。</p>
     {% endif %}
-</div>
+  </div>
 {% endblock %}

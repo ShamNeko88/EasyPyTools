@@ -70,3 +70,34 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+/**
+ * 指定されたIDの要素の値をクリップボードにコピーする関数
+ */
+function copyToClipboard(elementId) {
+    const copyText = document.getElementById(elementId);
+    if (copyText) {
+        navigator.clipboard.writeText(copyText.value)
+            .then(() => {
+                alert('URLがコピーされました: ' + copyText.value);
+            })
+            .catch(err => {
+                console.error('クリップボードへのコピーに失敗しました:', err);
+                alert('URLのコピーに失敗しました。');
+            });
+    } else {
+        alert('コピーする要素が見つかりません。');
+    }
+}
+
+/**
+ * DOMContentLoadedでイベントリスナーを設定
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    const copyButton = document.getElementById('copy-url-btn');
+    if (copyButton) {
+        copyButton.addEventListener('click', function () {
+            copyToClipboard('survey-url'); // 汎用関数を利用
+        });
+    }
+});
