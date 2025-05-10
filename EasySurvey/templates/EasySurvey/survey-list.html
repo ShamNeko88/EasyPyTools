@@ -16,7 +16,7 @@
                     <a href="{% url 'survey-result' access_token=survey.access_token %}">
                         {{ survey.title }}
                     </a>
-                    <span class="text-muted">（作成日: {{ survey.created_at|date:"Y-m-d H:i" }}）</span>
+                    <span class="text-muted">（作成日: {{ survey.created_at|date:"Y-m-d" }}）</span>
                 </li>
             {% endfor %}
         </ul>
