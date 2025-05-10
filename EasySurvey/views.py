@@ -10,6 +10,8 @@ from django.contrib.auth.models import AnonymousUser
 from django.views.generic import DeleteView
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
+from django.forms import modelformset_factory
+from .forms import TrnSurveyForm, TrnSurveyQuestionFormSet
 
 
 # 初期ページ（アンケート作成）
@@ -180,13 +182,36 @@ class SurveyDeleteView(LoginRequiredMixin, DeleteView):
         return context
 
 
-class SurveyEditView(LoginRequiredMixin, UpdateView):
-    model = TrnSurvey
+# アンケート編集ページ
+class SurveyEditView(LoginRequiredMixin, View):
     template_name = "EasySurvey/survey-edit.html"
-    fields = ["title", "detail"]  # 編集可能なフィールドを指定
 
-    def get_success_url(self):
-        # 編集後にリダイレクトするURLを指定
-        return reverse_lazy(
-            "survey-result", kwargs={"access_token": self.object.access_token}
+    def get(self, request, *args, **kwargs):
+        survey = get_object_or_404(TrnSurvey, pk=kwargs["pk"])
+        survey_form = TrnSurveyForm(instance=survey)
+        question_formset = TrnSurveyQuestionFormSet(instance=survey)
+        return render(
+            request,
+            self.template_name,
+            {"survey_form": survey_form, "question_formset": question_formset},
+        )
+
+    def post(self, request, *args, **kwargs):
+        survey = get_object_or_404(TrnSurvey, pk=kwargs["pk"])
+        survey_form = TrnSurveyForm(request.POST, instance=survey)
+        question_formset = TrnSurveyQuestionFormSet(request.POST, instance=survey)
+
+        if survey_form.is_valid() and question_formset.is_valid():
+            survey_form.save()
+            question_formset.save()
+            return redirect(
+                reverse_lazy(
+                    "survey-result", kwargs={"access_token": survey.access_token}
+                )
+            )
+
+        return render(
+            request,
+            self.template_name,
+            {"survey_form": survey_form, "question_formset": question_formset},
         )
