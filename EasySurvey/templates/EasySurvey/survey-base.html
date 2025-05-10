@@ -21,7 +21,7 @@
 
         {% if user.is_authenticated %}
           <li class="nav-item mx-2">
-            <a href="#" class="nav-link">作成済み一覧</a>
+            <a href="{% url "survey-list" %}" class="nav-link">作成済み一覧</a>
           </li>
         {% else %}
           <li class="nav-item mx-2">

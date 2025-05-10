@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SurveyIndexView, SurveyAnswerView, SurveyResultView
+from .views import SurveyIndexView, SurveyAnswerView, SurveyResultView, SurveyListView
 
 urlpatterns = [
     path("", SurveyIndexView.as_view(), name="survey-index"),
@@ -11,4 +11,5 @@ urlpatterns = [
         SurveyResultView.as_view(),
         name="survey_result",
     ),
+    path("my-surveys/", SurveyListView.as_view(), name="survey-list"),
 ]

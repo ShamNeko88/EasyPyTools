@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from .models import TrnSurvey, TrnSurveyQuestion, TrnSurveyAnswer
 import uuid
 from django.utils import timezone
-from django.db.models import Count
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # 初期ページ（アンケート作成）
@@ -119,5 +119,19 @@ class SurveyResultView(View):
         context = {
             "survey": survey,
             "results": results,
+        }
+        return render(request, self.template_name, context)
+
+
+# アンケート一覧ページ
+class SurveyListView(LoginRequiredMixin, View):
+    template_name = "EasySurvey/survey-list.html"
+
+    def get(self, request, *args, **kwargs):
+        # ログインしているユーザーが作成したアンケートを取得
+        created_surveys = TrnSurvey.objects.filter(created_by=request.user)
+
+        context = {
+            "created_surveys": created_surveys,
         }
         return render(request, self.template_name, context)

@@ -1,0 +1,27 @@
+{% extends 'EasySurvey/survey-base.html' %}
+{% load static %}
+
+{% block title %}
+  作成済みアンケート一覧
+{% endblock %}
+
+{% block survey_main %}
+<div class="container">
+    <h1>作成済みアンケート一覧</h1>
+    <hr>
+    {% if created_surveys %}
+        <ul class="list-group">
+            {% for survey in created_surveys %}
+                <li class="list-group-item">
+                    <a href="{% url 'survey_result' access_token=survey.access_token %}">
+                        {{ survey.title }}
+                    </a>
+                    <span class="text-muted">（作成日: {{ survey.created_at|date:"Y-m-d H:i" }}）</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>作成済みのアンケートはありません。</p>
+    {% endif %}
+</div>
+{% endblock %}

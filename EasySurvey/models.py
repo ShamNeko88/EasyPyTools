@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import UniqueConstraint
+from django.contrib.auth.models import User  # Userモデルをインポート
 
 
 # アンケートヘッダ
@@ -8,6 +9,9 @@ class TrnSurvey(models.Model):
     title = models.CharField(max_length=100)  # アンケートタイトル
     detail = models.TextField(null=True)  # アンケート詳細
     access_token = models.CharField(max_length=36)  # アクセストークン
+    created_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True
+    )  # 作成者
     created_at = models.DateTimeField(auto_now_add=True)  # 作成日時
     updated_at = models.DateTimeField(auto_now=True)  # 更新日時
 
