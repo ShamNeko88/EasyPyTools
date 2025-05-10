@@ -7,6 +7,8 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser
+from django.views.generic import DeleteView
+from django.urls import reverse_lazy
 
 
 # 初期ページ（アンケート作成）
@@ -156,3 +158,20 @@ class SurveyCompleteView(View):
             reverse("survey-answer", kwargs={"access_token": access_token})
         )
         return render(request, self.template_name, {"survey_url": survey_url})
+
+
+# アンケート削除ページ
+class SurveyDeleteView(LoginRequiredMixin, DeleteView):
+    model = TrnSurvey
+    template_name = "EasySurvey/survey-delete.html"
+    success_url = reverse_lazy("survey-list")
+
+    def get_queryset(self):
+        # ログインユーザーが作成したアンケートのみ削除可能
+        return self.model.objects.filter(created_by=self.request.user)
+    
+    # 削除ページで削除するデータを使いたい
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["survey"] = self.get_object()
+        return context

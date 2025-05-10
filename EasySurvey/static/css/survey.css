@@ -49,3 +49,10 @@ h1 {
 .radio-group label:hover {
     background-color: #f0f0f0;
 }
+
+/**
+ * アンケート削除ページのスタイル
+ */
+#delete-content {
+    color: crimson;
+}
