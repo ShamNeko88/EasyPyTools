@@ -1,0 +1,13 @@
+{% extends 'EasySurvey/survey-base.html' %}
+
+{% block survey_main %}
+<div class="container mt-4">
+    <h2>アンケートが作成されました！</h2>
+    <p>以下のURLを共有してアンケートに回答してもらいましょう。</p>
+    <div class="alert alert-info">
+        <strong>アンケートURL:</strong>
+        <input type="text" id="survey-url" class="form-control" value="{{ survey_url }}" readonly>
+        <button id="copy-url-btn" class="btn btn-secondary mt-2">URLをコピー</button>
+    </div>
+</div>
+{% endblock %}

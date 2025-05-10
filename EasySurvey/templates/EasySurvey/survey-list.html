@@ -13,7 +13,7 @@
         <ul class="list-group">
             {% for survey in created_surveys %}
                 <li class="list-group-item">
-                    <a href="{% url 'survey_result' access_token=survey.access_token %}">
+                    <a href="{% url 'survey-result' access_token=survey.access_token %}">
                         {{ survey.title }}
                     </a>
                     <span class="text-muted">（作成日: {{ survey.created_at|date:"Y-m-d H:i" }}）</span>

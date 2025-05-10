@@ -11,10 +11,10 @@
 
 {% block survey_main %}
   <div class="container">
-    <form id="survey-form" method="post">
+    <form id="survey-form" method="post" action="{% url 'survey-index' %}">
       {% csrf_token %}
       <div class="text-right">
-        <button type="button" id="submit-survey-btn" class="btn btn-success">下記内容で作成</button>
+        <button type="submit" id="submit-survey-btn" class="btn btn-success">下記内容で作成</button>
       </div>
       <!-- タイトルフォーム -->
       <div class="form-group">

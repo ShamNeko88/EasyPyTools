@@ -1,5 +1,11 @@
 from django.urls import path
-from .views import SurveyIndexView, SurveyAnswerView, SurveyResultView, SurveyListView
+from .views import (
+    SurveyIndexView,
+    SurveyAnswerView,
+    SurveyResultView,
+    SurveyListView,
+    SurveyCompleteView,
+)
 
 urlpatterns = [
     path("", SurveyIndexView.as_view(), name="survey-index"),
@@ -9,7 +15,12 @@ urlpatterns = [
     path(
         "survey/<str:access_token>/result/",
         SurveyResultView.as_view(),
-        name="survey_result",
+        name="survey-result",
     ),
     path("my-surveys/", SurveyListView.as_view(), name="survey-list"),
+    path(
+        "survey/complete/<str:access_token>/",
+        SurveyCompleteView.as_view(),
+        name="survey-complete",
+    ),
 ]

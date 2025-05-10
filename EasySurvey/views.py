@@ -5,6 +5,8 @@ from .models import TrnSurvey, TrnSurveyQuestion, TrnSurveyAnswer
 import uuid
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
+from django.contrib.auth.models import AnonymousUser
 
 
 # 初期ページ（アンケート作成）
@@ -15,22 +17,28 @@ class SurveyIndexView(View):
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
-        # フロントエンドから送信されたデータを取得
+        # アンケート作成処理
         title = request.POST.get("title")
         detail = request.POST.get("notes", "")  # 備考（オプション）
         questions = request.POST.getlist("questions[]")  # 質問リスト
 
         # バリデーション
         if not title or not questions:
-            return JsonResponse(
-                {"error": "タイトルと少なくとも1つの質問が必要です。"}, status=400
+            return render(
+                request,
+                self.template_name,
+                {"error": "タイトルと少なくとも1つの質問が必要です。"},
             )
+
+        # 作成者を設定（ログインしていない場合はNone）
+        created_by = request.user if not isinstance(request.user, AnonymousUser) else None
 
         # TrnSurveyにデータを保存
         survey = TrnSurvey.objects.create(
             title=title,
             detail=detail,
             access_token=str(uuid.uuid4()),  # アクセストークンを自動生成
+            created_by=created_by,  # 作成者を保存
         )
 
         # TrnSurveyQuestionにデータを保存
@@ -40,8 +48,9 @@ class SurveyIndexView(View):
                     survey_id=survey, question=question_text.strip()
                 )
 
-        return JsonResponse(
-            {"message": "アンケートが作成されました。", "survey_id": survey.survey_id}
+        # 完了ページにリダイレクト
+        return redirect(
+            reverse("survey-complete", kwargs={"access_token": survey.access_token})
         )
 
 
@@ -92,7 +101,7 @@ class SurveyAnswerView(View):
                 )
 
         # 回答保存後に結果ページへリダイレクト
-        return redirect("survey_result", access_token=access_token)
+        return redirect("survey-result", access_token=access_token)
 
 
 # アンケート結果ページ
@@ -135,3 +144,15 @@ class SurveyListView(LoginRequiredMixin, View):
             "created_surveys": created_surveys,
         }
         return render(request, self.template_name, context)
+
+
+# アンケート完了ページ
+class SurveyCompleteView(View):
+    template_name = "EasySurvey/survey-complete.html"
+
+    def get(self, request, *args, **kwargs):
+        access_token = kwargs.get("access_token")
+        survey_url = request.build_absolute_uri(
+            reverse("survey-answer", kwargs={"access_token": access_token})
+        )
+        return render(request, self.template_name, {"survey_url": survey_url})
