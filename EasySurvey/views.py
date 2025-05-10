@@ -108,15 +108,11 @@ class SurveyResultView(View):
         # 各質問に対する回答の集計
         results = []
         for question in questions:
-            answers = (
-                TrnSurveyAnswer.objects.filter(question_id=question)
-                .values("answer")
-                .annotate(count=Count("answer"))
-            )
+            answers = TrnSurveyAnswer.objects.filter(question_id=question)
             results.append(
                 {
                     "question": question.question,
-                    "answers": answers,
+                    "answers": answers,  # 各回答者の回答を含む
                 }
             )
 

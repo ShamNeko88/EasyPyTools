@@ -12,7 +12,7 @@
 {% block survey_main %}
 <div class="container">
     <h1>{{ survey.title }}</h1>
-    <p>{{ survey.detail }}</p>
+    <p>{{ survey.detail|linebreaksbr }}</p>
     <hr>
     {% for result in results %}
         <div class="mb-4">
@@ -20,7 +20,18 @@
             <ul>
                 {% for answer in result.answers %}
                     <li>
-                        回答: {{ answer.answer }} - {{ answer.count }}件
+                        回答者: {{ answer.responder }}<br>
+                        回答: 
+                        {% if answer.answer == "1" %}
+                            〇
+                        {% elif answer.answer == "2" %}
+                            △
+                        {% elif answer.answer == "3" %}
+                            ×
+                        {% else %}
+                            不明
+                        {% endif %}<br>
+                        コメント: {{ answer.comment|default:"なし" }}
                     </li>
                 {% endfor %}
             </ul>

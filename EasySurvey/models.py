@@ -37,6 +37,12 @@ class TrnSurveyQuestion(models.Model):
 
 # アンケート回答
 class TrnSurveyAnswer(models.Model):
+    # 回答内容の選択肢
+    ANSWER_CHOICES = [
+        (1, '〇'),
+        (2, '△'),
+        (3, '×'),
+    ]
     survey_id = models.ForeignKey(
         TrnSurvey, on_delete=models.CASCADE, db_column="survey_id"
     )  # 外部キー
@@ -45,7 +51,7 @@ class TrnSurveyAnswer(models.Model):
     )  # 外部キー
     answer_id = models.AutoField(primary_key=True)  # 主キー
     responder = models.CharField(max_length=50)
-    answer = models.CharField(max_length=1)  # 回答内容
+    answer = models.CharField(max_length=1, choices=ANSWER_CHOICES)  # 回答内容
     comment = models.TextField(null=True)  # コメント（オプション）
     created_at = models.DateTimeField(auto_now_add=True)  # 作成日時
     updated_at = models.DateTimeField(auto_now=True)  # 更新日時

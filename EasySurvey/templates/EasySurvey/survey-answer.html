@@ -15,7 +15,7 @@
   <div class="container">
     <h1>{{ survey.title }}</h1>
     <div class="mb-4">
-      <p>{{ survey.detail }}</p>
+      <p>{{ survey.detail|linebreaksbr }}</p>
     </div>
     <form id="answer-form" method="post">
       {% csrf_token %}
