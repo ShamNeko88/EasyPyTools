@@ -1,10 +1,6 @@
 {% extends 'EasySurvey/survey-base.html' %}
 {% load static %}
 
-{% block extra_css %}
-  <link rel="stylesheet" href="{% static 'css/survey.css' %}" />
-{% endblock %}
-
 {% block title %}
   アンケート結果
 {% endblock %}
@@ -17,24 +13,34 @@
     {% for result in results %}
         <div class="mb-4">
             <h4>{{ result.question }}</h4>
-            <ul>
-                {% for answer in result.answers %}
-                    <li>
-                        回答者: {{ answer.responder }}<br>
-                        回答: 
-                        {% if answer.answer == "1" %}
-                            〇
-                        {% elif answer.answer == "2" %}
-                            △
-                        {% elif answer.answer == "3" %}
-                            ×
-                        {% else %}
-                            不明
-                        {% endif %}<br>
-                        コメント: {{ answer.comment|default:"なし" }}
-                    </li>
-                {% endfor %}
-            </ul>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>回答者</th>
+                        <th>回答</th>
+                        <th>コメント</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for answer in result.answers %}
+                        <tr>
+                            <td>{{ answer.responder }}</td>
+                            <td>
+                                {% if answer.answer == "1" %}
+                                    〇
+                                {% elif answer.answer == "2" %}
+                                    △
+                                {% elif answer.answer == "3" %}
+                                    ×
+                                {% else %}
+                                    不明
+                                {% endif %}
+                            </td>
+                            <td>{{ answer.comment|default:"なし" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     {% endfor %}
 </div>
