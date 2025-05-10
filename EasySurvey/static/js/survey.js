@@ -56,17 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
  */
 document.addEventListener('DOMContentLoaded', function () {
     const copyButton = document.getElementById('copy-url-btn');
-    const urlField = document.getElementById('survey-url');
-
-    if (copyButton && urlField) {
-        copyButton.addEventListener('click', async function () {
-            try {
-                await navigator.clipboard.writeText(urlField.value);
-                alert('URLがコピーされました: ' + urlField.value);
-            } catch (err) {
-                console.error('クリップボードへのコピーに失敗しました:', err);
-                alert('URLのコピーに失敗しました。');
-            }
+    if (copyButton) {
+        copyButton.addEventListener('click', function () {
+            copyToClipboard('survey-url'); // 汎用関数を利用
         });
     }
 });
@@ -89,15 +81,3 @@ function copyToClipboard(elementId) {
         alert('コピーする要素が見つかりません。');
     }
 }
-
-/**
- * DOMContentLoadedでイベントリスナーを設定
- */
-document.addEventListener('DOMContentLoaded', function () {
-    const copyButton = document.getElementById('copy-url-btn');
-    if (copyButton) {
-        copyButton.addEventListener('click', function () {
-            copyToClipboard('survey-url'); // 汎用関数を利用
-        });
-    }
-});
