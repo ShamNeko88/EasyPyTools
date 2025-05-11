@@ -8,9 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser
 from django.views.generic import DeleteView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.forms import modelformset_factory
 from .forms import TrnSurveyForm, TrnSurveyQuestionFormSet
 
 
@@ -179,6 +178,26 @@ class SurveyDeleteView(LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["survey"] = self.get_object()
+        return context
+
+
+# 質問削除ページ
+class QuestionDeleteView(DeleteView):
+    model = TrnSurveyQuestion
+    template_name = "EasySurvey/survey-question-delete.html"
+
+    def get_success_url(self):
+        # 削除後にアンケート編集画面に遷移
+        survey_id = self.object.survey_id.survey_id  # 質問に関連するアンケートIDを取得
+        return reverse_lazy("survey-edit", kwargs={"pk": survey_id})
+
+    def get_queryset(self):
+        # ログインユーザーが作成した質問のみ削除可能
+        return self.model.objects.filter(survey_id__created_by=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["question"] = self.get_object()
         return context
 
 
