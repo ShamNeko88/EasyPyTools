@@ -7,8 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser
-from django.views.generic import DeleteView
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic import DeleteView, TemplateView
 from django.urls import reverse_lazy
 from .forms import TrnSurveyForm, TrnSurveyQuestionFormSet
 
@@ -209,10 +208,16 @@ class SurveyEditView(LoginRequiredMixin, View):
         survey = get_object_or_404(TrnSurvey, pk=kwargs["pk"])
         survey_form = TrnSurveyForm(instance=survey)
         question_formset = TrnSurveyQuestionFormSet(instance=survey)
+        # 回答者一覧を取得
+        answerers = TrnSurveyAnswer.objects.filter(question_id__survey_id=survey).values_list('responder', flat=True).distinct()
         return render(
             request,
             self.template_name,
-            {"survey_form": survey_form, "question_formset": question_formset},
+            {
+                "survey_form": survey_form,
+                "question_formset": question_formset,
+                "answerers": answerers,  # 回答者一覧をコンテキストに追加
+            },
         )
 
     def post(self, request, *args, **kwargs):
@@ -235,3 +240,19 @@ class SurveyEditView(LoginRequiredMixin, View):
             self.template_name,
             {"survey_form": survey_form, "question_formset": question_formset},
         )
+
+
+# アンケート回答者削除ページ
+class ResponderDeleteView(LoginRequiredMixin, TemplateView):
+    template_name = "EasySurvey/survey-responder-delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        survey = get_object_or_404(TrnSurvey, pk=self.kwargs["pk"])
+        context["survey"] = survey
+        return context
+
+    def post(self, request, *args, **kwargs):
+        survey = get_object_or_404(TrnSurvey, pk=self.kwargs["pk"])
+        TrnSurveyAnswer.objects.filter(survey_id=survey).delete()
+        return redirect(reverse_lazy("survey-edit", kwargs={"pk": survey.pk}))
