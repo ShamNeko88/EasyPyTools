@@ -200,6 +200,9 @@ class SurveyEditView(LoginRequiredMixin, View):
         survey = get_object_or_404(TrnSurvey, pk=kwargs["pk"])
         survey_form = TrnSurveyForm(request.POST, instance=survey)
         question_formset = TrnSurveyQuestionFormSet(request.POST, instance=survey)
+        # print(f"1: {survey_form.errors}")
+        # print(f"2: {question_formset.errors}")
+
         if survey_form.is_valid() and question_formset.is_valid():
             survey_form.save()
             question_formset.save()

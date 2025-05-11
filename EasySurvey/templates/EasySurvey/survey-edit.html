@@ -27,6 +27,7 @@
         {% for form in question_formset %}
           <div class="form-group d-flex align-items-center mb-2">
             <!-- 質問内容の入力フィールド -->
+             {{ form.question_id}}
             <textarea class="form-control mr-2" id="{{ form.question.id_for_label }}" name="{{ form.question.html_name }}" rows="1" placeholder="質問を入力してください">{{ form.question.value }}</textarea>
             <!-- 削除ボタン -->
             <button type="button" class="btn btn-danger remove-question-btn text-nowrap">削除</button>
