@@ -1,0 +1,19 @@
+<!-- filepath: c:\Users\bigfo\Desktop\mydev\01-Projects\EasyPyTools\EasySurvey\templates\EasySurvey\survey-delete.html -->
+{% extends "EasySurvey/survey-base.html" %}
+
+{% block title %}
+  回答者削除確認
+{% endblock %}
+
+{% block survey_main %}
+  <div class="container mt-4">
+    <h2>回答者をすべて削除</h2>
+    <p>この操作は取り消せません。</p>
+    <p>アンケート作成時点の状態になります。</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">削除する</button>
+      <a href="{% url 'survey-edit' survey.pk %}" class="btn btn-secondary">キャンセル</a>
+    </form>
+  </div>
+{% endblock %}
