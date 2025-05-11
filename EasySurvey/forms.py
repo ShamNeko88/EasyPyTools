@@ -1,6 +1,6 @@
 from django import forms
+from django.forms.models import BaseInlineFormSet, inlineformset_factory
 from .models import TrnSurvey, TrnSurveyQuestion
-from django.forms.models import inlineformset_factory
 
 
 class TrnSurveyForm(forms.ModelForm):
@@ -9,11 +9,25 @@ class TrnSurveyForm(forms.ModelForm):
         fields = ["title", "detail"]  # 編集可能なフィールド
 
 
-# TrnSurveyに関連するTrnSurveyQuestionを編集するためのフォームセット
+class CustomTrnSurveyQuestionFormSet(BaseInlineFormSet):
+    def clean(self):
+        """
+        バリデーション時にquestion_idを無視する
+        """
+        for form in self.forms:
+            if form.cleaned_data.get("DELETE"):
+                continue
+            # 必須フィールドのバリデーションをカスタマイズ
+            if not form.cleaned_data.get("question"):
+                form.add_error("question", "質問内容は必須です。")
+
+
+# フォームセットの定義
 TrnSurveyQuestionFormSet = inlineformset_factory(
     TrnSurvey,
     TrnSurveyQuestion,
-    fields=["question"],
-    extra=1,  # 新しい質問を追加できるようにする
-    can_delete=True,  # 質問を削除できるようにする
+    formset=CustomTrnSurveyQuestionFormSet,
+    fields=["question"],  # 編集可能なフィールド
+    extra=0,
+    can_delete=True,
 )

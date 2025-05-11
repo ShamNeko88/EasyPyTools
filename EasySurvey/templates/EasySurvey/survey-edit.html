@@ -10,20 +10,32 @@
     <h2 class="mb-3">アンケート編集</h2>
     <hr />
     <form method="post">
+      <div class="d-flex justify-content-end align-items-center">
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a href="{% url 'survey-list' %}" class="btn btn-secondary ml-2">キャンセル</a>
+      </div>
       {% csrf_token %}
+      <!-- タイトル編集 -->
       <label for="title">タイトル</label>
       <textarea class="form-control" id="title" name="title" rows="1" placeholder="タイトルを入力">{{ survey_form.instance.title }}</textarea>
+      <!-- 備考編集 -->
       <label for="detail" class="mt-2">備考</label>
       <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="備考を入力">{{ survey_form.instance.detail }}</textarea>
-      <h3 class="mt-2">設問</h3>
+      <!-- 質問内容編集 -->
+      <label class="mt-2">質問内容</label>
       {{ question_formset.management_form }}
-      <div class="form-group">
         {% for form in question_formset %}
-          <div class="mb-3">
-            {{form.as_p}}
-            {% comment %} <textarea class="form-control" id="{{ form.question.id_for_label }}" name="{{ form.question.html_name }}" rows="1">{{ form.question.value }}</textarea> {% endcomment %}
+          <div class="form-group d-flex align-items-center mb-2">
+            <!-- 質問内容の入力フィールド -->
+            <textarea class="form-control mr-2" id="{{ form.question.id_for_label }}" name="{{ form.question.html_name }}" rows="1" placeholder="質問を入力してください">{{ form.question.value }}</textarea>
+            <!-- 削除ボタン -->
+            <button type="button" class="btn btn-danger remove-question-btn text-nowrap">削除</button>
           </div>
         {% endfor %}
+      <!-- 質問内容追加 -->
+      <div id="questions-container"></div>
+      <div class="form-group text-center">
+        <button type="button" id="add-question-btn" class="btn btn-secondary">＋ 質問を追加</button>
       </div>
       <button type="submit" class="btn btn-primary">保存</button>
       <a href="{% url 'survey-list' %}" class="btn btn-secondary">キャンセル</a>
