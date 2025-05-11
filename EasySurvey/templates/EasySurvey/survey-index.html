@@ -9,8 +9,10 @@
   EasySurvey
 {% endblock %}
 
-{% block survey_main %}
+{% block survey_main %}\
   <div class="container">
+    <h2 class="mb-3">アンケート作成</h2>
+    <hr />
     <form id="survey-form" method="post" action="{% url 'survey-index' %}">
       {% csrf_token %}
       <div class="text-right">
