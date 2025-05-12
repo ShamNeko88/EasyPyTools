@@ -224,21 +224,36 @@ class SurveyEditView(LoginRequiredMixin, View):
         survey = get_object_or_404(TrnSurvey, pk=kwargs["pk"])
         survey_form = TrnSurveyForm(request.POST, instance=survey)
         question_formset = TrnSurveyQuestionFormSet(request.POST, instance=survey)
-        # print(f"1: {survey_form.errors}")
-        # print(f"2: {question_formset.errors}")
 
+        # デバッグ: POSTデータを確認
+        print(request.POST)
+        # 新規追加された質問を取得
+        new_questions = request.POST.getlist("new_questions[]")
+        print("New Questions:", new_questions)
         if survey_form.is_valid() and question_formset.is_valid():
             survey_form.save()
             question_formset.save()
+
+            # 新規追加された質問を保存
+            for question_text in new_questions:
+                if question_text.strip():  # 空の質問を無視
+                    TrnSurveyQuestion.objects.create(
+                        survey_id=survey, question=question_text.strip()
+                    )
+
             return redirect(
                 reverse_lazy(
                     "survey-result", kwargs={"access_token": survey.access_token}
                 )
             )
+
         return render(
             request,
             self.template_name,
-            {"survey_form": survey_form, "question_formset": question_formset},
+            {
+                "survey_form": survey_form,
+                "question_formset": question_formset,
+            },
         )
 
 
