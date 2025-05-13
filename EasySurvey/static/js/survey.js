@@ -30,16 +30,27 @@ document.addEventListener("DOMContentLoaded", function () {
         addQuestionBtn.addEventListener("click", function () {
             // 新しい質問のHTMLを作成
             const newQuestionDiv = document.createElement("div");
-            newQuestionDiv.classList.add("form-group", "d-flex", "align-items-center", "mb-2");
+            newQuestionDiv.classList.add("form-group");
+
+            // 新しい質問の番号を取得
+            const questionCount = questionsContainer.getElementsByClassName('form-group').length + 1;
 
             // 新しい質問のHTMLを設定
             newQuestionDiv.innerHTML = `
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="show_choices1" name="show_choices[]" value="1" checked>
-                    <label class="form-check-label" for="show_choices1"></label>
+                <div class="d-flex align-items-center">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" 
+                               id="show_choices${questionCount}" 
+                               name="show_choices[]" 
+                               value="${questionCount}" checked>
+                        <label class="form-check-label text-nowrap" 
+                               for="show_choices${questionCount}"></label>
+                    </div>
+                    <input type="text" class="form-control mr-2" 
+                           name="questions[]" 
+                           placeholder="質問を入力" required/>
+                    <button type="button" class="btn btn-danger remove-question-btn text-nowrap">削除</button>
                 </div>
-                <input type="text" class="form-control mr-2" name="questions[]" placeholder="質問を入力" style="flex: 1;">
-                <button type="button" class="btn btn-danger remove-question-btn">削除</button>
             `;
 
             // 質問を追加するコンテナに新しい質問を追加

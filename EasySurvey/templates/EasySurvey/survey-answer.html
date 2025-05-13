@@ -29,16 +29,18 @@
         <div class="form-group">
           <hr />
           <p>{{ question.question }}</p>
-          <div class="radio-group">
-            <input type="radio" id="question_{{ question.question_id }}_1" name="question_{{ question.question_id }}" value="1" required />
-            <label for="question_{{ question.question_id }}_1">〇</label>
+          {% if question.show_choices_flag == "1" %}
+            <div class="radio-group">
+                <input type="radio" id="question_{{ question.question_id }}_1" name="question_{{ question.question_id }}" value="1" required />
+                <label for="question_{{ question.question_id }}_1">〇</label>
 
-            <input type="radio" id="question_{{ question.question_id }}_2" name="question_{{ question.question_id }}" value="2" />
-            <label for="question_{{ question.question_id }}_2">△</label>
+                <input type="radio" id="question_{{ question.question_id }}_2" name="question_{{ question.question_id }}" value="2" />
+                <label for="question_{{ question.question_id }}_2">△</label>
 
-            <input type="radio" id="question_{{ question.question_id }}_3" name="question_{{ question.question_id }}" value="3" />
-            <label for="question_{{ question.question_id }}_3">×</label>
-          </div>
+                <input type="radio" id="question_{{ question.question_id }}_3" name="question_{{ question.question_id }}" value="3" />
+                <label for="question_{{ question.question_id }}_3">×</label>
+            </div>
+          {% endif %}
           <textarea class="form-control mt-2" name="comment_{{ question.question_id }}" rows="3" placeholder="コメントを入力してください（オプション）"></textarea>
         </div>
       {% endfor %}

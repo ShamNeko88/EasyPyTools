@@ -25,6 +25,11 @@ class SurveyIndexView(View):
         questions = request.POST.getlist("questions[]")
         show_choices = request.POST.getlist("show_choices[]")  # 選択肢の有無
 
+        # デバッグ出力
+        print("質問数:", len(questions))
+        print("show_choices:", show_choices)
+        print("POST データ全体:", request.POST)
+
         # バリデーション
         if not title or not questions:
             return render(request, self.template_name, 
