@@ -29,6 +29,7 @@ class TrnSurveyQuestion(models.Model):
         TrnSurvey, on_delete=models.CASCADE, db_column="survey_id"
     )  # 外部キー
     question_id = models.AutoField(primary_key=True)  # 主キー
+    show_choices_flag = models.CharField(max_length=1)  # 選択肢FLG
     question = models.CharField(max_length=100, null=True)  # 設問内容
     created_at = models.DateTimeField(auto_now_add=True)  # 作成日時
     updated_at = models.DateTimeField(auto_now=True)  # 更新日時

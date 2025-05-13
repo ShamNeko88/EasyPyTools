@@ -34,6 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // 新しい質問のHTMLを設定
             newQuestionDiv.innerHTML = `
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="show_choices1" name="show_choices[]" value="1" checked>
+                    <label class="form-check-label" for="show_choices1"></label>
+                </div>
                 <input type="text" class="form-control mr-2" name="questions[]" placeholder="質問を入力" style="flex: 1;">
                 <button type="button" class="btn btn-danger remove-question-btn">削除</button>
             `;

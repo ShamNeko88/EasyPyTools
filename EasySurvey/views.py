@@ -20,43 +20,38 @@ class SurveyIndexView(View):
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
-        # アンケート作成処理
         title = request.POST.get("title")
-        detail = request.POST.get("notes", "")  # 備考（オプション）
-        questions = request.POST.getlist("questions[]")  # 質問リスト
+        detail = request.POST.get("notes", "")
+        questions = request.POST.getlist("questions[]")
+        show_choices = request.POST.getlist("show_choices[]")  # 選択肢の有無
 
         # バリデーション
         if not title or not questions:
-            return render(
-                request,
-                self.template_name,
-                {"error": "タイトルと少なくとも1つの質問が必要です。"},
-            )
+            return render(request, self.template_name, 
+                         {"error": "タイトルと少なくとも1つの質問が必要です。"})
 
-        # 作成者を設定（ログインしていない場合はNone）
-        created_by = (
-            request.user if not isinstance(request.user, AnonymousUser) else None
-        )
+        created_by = request.user if not isinstance(request.user, AnonymousUser) else None
 
         # TrnSurveyにデータを保存
         survey = TrnSurvey.objects.create(
             title=title,
             detail=detail,
-            access_token=str(uuid.uuid4()),  # アクセストークンを自動生成
-            created_by=created_by,  # 作成者を保存
+            access_token=str(uuid.uuid4()),
+            created_by=created_by,
         )
 
         # TrnSurveyQuestionにデータを保存
-        for question_text in questions:
-            if question_text.strip():  # 空の質問を無視
+        for i, question_text in enumerate(questions):
+            if question_text.strip():
+                show_choices_flag = "1" if str(i+1) in show_choices else "0"
                 TrnSurveyQuestion.objects.create(
-                    survey_id=survey, question=question_text.strip()
+                    survey_id=survey,
+                    question=question_text.strip(),
+                    show_choices_flag=show_choices_flag  # フラグを設定
                 )
 
-        # 完了ページにリダイレクト
-        return redirect(
-            reverse("survey-complete", kwargs={"access_token": survey.access_token})
-        )
+        return redirect(reverse("survey-complete", 
+                              kwargs={"access_token": survey.access_token}))
 
 
 # アンケート回答ページ
