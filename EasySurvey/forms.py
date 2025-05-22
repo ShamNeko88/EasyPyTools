@@ -22,12 +22,32 @@ class CustomTrnSurveyQuestionFormSet(BaseInlineFormSet):
                 form.add_error("question", "質問内容は必須です。")
 
 
+class TrnSurveyQuestionForm(forms.ModelForm):
+    show_choices_flag = forms.BooleanField(
+        label='〇, △, ×の選択肢を表示',
+        required=False,
+    )
+
+    class Meta:
+        model = TrnSurveyQuestion
+        fields = ["question", "show_choices_flag"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["show_choices_flag"].initial = (self.instance.show_choices_flag == "1")
+
+    def clean_show_choices_flag(self):
+        value = self.cleaned_data.get("show_choices_flag")
+        return "1" if value else "0"
+
+
 # フォームセットの定義
 TrnSurveyQuestionFormSet = inlineformset_factory(
     TrnSurvey,
     TrnSurveyQuestion,
+    form=TrnSurveyQuestionForm,
     formset=CustomTrnSurveyQuestionFormSet,
-    fields=["question"],  # 編集可能なフィールド
+    fields=["question", "show_choices_flag"],
     extra=0,
     can_delete=True,
 )

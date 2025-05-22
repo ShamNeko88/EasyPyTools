@@ -37,14 +37,20 @@
       </ul>
       <!-- 質問内容編集 -->
       <label class="mt-2">質問内容</label>
+      <p id="checkbox-description">回答時に"〇", "△", "×"の選択肢を非表示にする場合はチェックをはずしてください</p>
       {{ question_formset.management_form }}
       {% for form in question_formset %}
         <div class="form-group d-flex align-items-center mb-2">
           <!-- 質問内容の入力フィールド -->
           {{ form.question_id }}
+          <!-- 〇△×選択肢表示フラグ -->
+            <div id="edit-form-check" class="form-check d-flex align-items-center">
+              {{ form.show_choices_flag }}
+              <label class="form-check-label mt-2 mr-2" for="{{ form.show_choices_flag.id_for_label }}"></label>
+            </div>
           <textarea class="form-control mr-2" id="{{ form.question.id_for_label }}" name="{{ form.question.html_name }}" rows="1" placeholder="質問を入力してください">{{ form.question.value }}</textarea>
           <!-- 削除ボタン -->
-          <a href="{% url 'question-delete' form.instance.question_id %}" class="btn btn-danger text-nowrap">削除</a>
+          <a href="{% url 'question-delete' form.instance.question_id %}" class="btn btn-danger text-nowrap ml-2">削除</a>
         </div>
       {% endfor %}
       <hr />
