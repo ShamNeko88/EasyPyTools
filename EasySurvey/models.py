@@ -45,6 +45,7 @@ class TrnSurveyQuestion(models.Model):
 class TrnSurveyAnswer(models.Model):
     # 回答内容の選択肢
     ANSWER_CHOICES = [
+        (0, "-"),
         (1, "〇"),
         (2, "△"),
         (3, "×"),

@@ -86,22 +86,19 @@ class SurveyAnswerView(View):
 
         # 各質問に対する回答とコメントを取得
         for question in questions:
-            answer_text = request.POST.get(
-                f"question_{question.question_id}"
-            )  # 回答を取得
-            comment_text = request.POST.get(
-                f"comment_{question.question_id}", ""
-            )  # コメントを取得
-            if answer_text:
-                # データを更新または作成
+            answer_text = request.POST.get(f"question_{question.question_id}")
+            comment_text = request.POST.get(f"comment_{question.question_id}", "")
+            if answer_text or comment_text:
+                if not answer_text:
+                    answer_text = "0"
                 TrnSurveyAnswer.objects.update_or_create(
                     survey_id=survey,
                     question_id=question,
                     responder=responder_name,
                     defaults={
                         "answer": answer_text,
-                        "comment": comment_text,  # コメントを保存
-                        "updated_at": timezone.now(),  # 更新日時を更新
+                        "comment": comment_text,
+                        "updated_at": timezone.now(),
                     },
                 )
 
