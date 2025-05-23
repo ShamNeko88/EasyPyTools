@@ -44,10 +44,11 @@
           <!-- 質問内容の入力フィールド -->
           {{ form.question_id }}
           <!-- 〇△×選択肢表示フラグ -->
-            <div id="edit-form-check" class="form-check d-flex align-items-center">
-              {{ form.show_choices_flag }}
-              <label class="form-check-label mt-2 mr-2" for="{{ form.show_choices_flag.id_for_label }}"></label>
-            </div>
+          <div id="edit-form-check" class="form-check d-flex align-items-center">
+            <input type="checkbox" name="{{ form.show_choices_flag.html_name }}" id="{{ form.show_choices_flag.id_for_label }}" value="1"
+                   {% if form.show_choices_flag.value == "1" or form.show_choices_flag.value == True %}checked{% endif %}>
+            <label class="form-check-label mt-2 mr-2" for="{{ form.show_choices_flag.id_for_label }}"></label>
+          </div>
           <textarea class="form-control mr-2" id="{{ form.question.id_for_label }}" name="{{ form.question.html_name }}" rows="1" placeholder="質問を入力してください">{{ form.question.value }}</textarea>
           <!-- 削除ボタン -->
           <a href="{% url 'question-delete' form.instance.question_id %}" class="btn btn-danger text-nowrap ml-2">削除</a>

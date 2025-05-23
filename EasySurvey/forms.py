@@ -34,8 +34,12 @@ class TrnSurveyQuestionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["show_choices_flag"].initial = (self.instance.show_choices_flag == "1")
-
+        # データベースから"show_choices_flag"の値を取得
+        value = getattr(self.instance, "show_choices_flag", "1")
+        # チェックボックスの初期値をセット
+        self.fields["show_choices_flag"].initial = (value == "1")
+        print("DEBUG:", self.instance.question, value, (value == "1"))
+    # formから受け取った値をデータベースに保存するための値に変換
     def clean_show_choices_flag(self):
         value = self.cleaned_data.get("show_choices_flag")
         return "1" if value else "0"
