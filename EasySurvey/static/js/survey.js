@@ -65,17 +65,18 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (addNewQuestionBtn && newQuestionsContainer) {
         // アンケート編集ページの処理
         addNewQuestionBtn.addEventListener("click", function () {
-            // 新しい質問のHTMLを作成
             const newQuestionDiv = document.createElement("div");
             newQuestionDiv.classList.add("form-group", "d-flex", "align-items-center", "mb-2");
 
-            // 新しい質問のHTMLを設定
             newQuestionDiv.innerHTML = `
+                <div class="form-check d-flex align-items-center mr-2">
+                    <input type="checkbox" class="form-check-input" name="new_show_choices_flag[]" value="1" checked>
+                    <label class="form-check-label ml-1"></label>
+                </div>
                 <input type="text" class="form-control mr-2" name="new_questions[]" placeholder="質問を入力" style="flex: 1;">
                 <button type="button" class="btn btn-danger remove-question-btn">削除</button>
             `;
 
-            // 質問を追加するコンテナに新しい質問を追加
             newQuestionsContainer.appendChild(newQuestionDiv);
 
             // 削除ボタンのクリックイベントを追加

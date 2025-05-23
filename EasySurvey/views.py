@@ -229,16 +229,20 @@ class SurveyEditView(LoginRequiredMixin, View):
         print(request.POST)
         # 新規追加された質問を取得
         new_questions = request.POST.getlist("new_questions[]")
+        new_show_choices_flags = request.POST.getlist("new_show_choices_flag[]")
         print("New Questions:", new_questions)
         if survey_form.is_valid() and question_formset.is_valid():
             survey_form.save()
             question_formset.save()
 
             # 新規追加された質問を保存
-            for question_text in new_questions:
-                if question_text.strip():  # 空の質問を無視
+            for i, question_text in enumerate(new_questions):
+                if question_text.strip():
+                    show_choices_flag = "1" if (i < len(new_show_choices_flags)) else "0"
                     TrnSurveyQuestion.objects.create(
-                        survey_id=survey, question=question_text.strip()
+                        survey_id=survey,
+                        question=question_text.strip(),
+                        show_choices_flag=show_choices_flag
                     )
 
             return redirect(
