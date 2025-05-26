@@ -4,13 +4,13 @@
 
 {% block meta_description %}{{ survey.detail|truncatechars:100 }}{% endblock %}
 
-{% block og_title %}{{ survey.title }}{% endblock %}
-{% block og_description %}{{ survey.detail|truncatechars:100 }}{% endblock %}
+{% block og_title %}EasySurvey - 簡単アンケート{% endblock %}
+{% block og_description %}{{ survey.title }}{% endblock %}
 {% block og_type %}website{% endblock %}
 {% block og_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}
 
-{% block twitter_title %}{{ survey.title }}{% endblock %}
-{% block twitter_description %}{{ survey.detail|truncatechars:100 }}{% endblock %}
+{% block twitter_title %}EasySurvey - 簡単アンケート{% endblock %}
+{% block twitter_description %}{{ survey.title }}{% endblock %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/survey.css' %}" />
