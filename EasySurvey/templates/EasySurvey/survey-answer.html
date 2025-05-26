@@ -2,13 +2,37 @@
 {% extends 'EasySurvey/survey-base.html' %}
 {% load static %}
 
+{% block meta_description %}{{ survey.detail|truncatechars:100 }}{% endblock %}
+
+{% block og_title %}{{ survey.title }}{% endblock %}
+{% block og_description %}{{ survey.detail|truncatechars:100 }}{% endblock %}
+{% block og_type %}website{% endblock %}
+{% block og_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}
+
+{% block twitter_title %}{{ survey.title }}{% endblock %}
+{% block twitter_description %}{{ survey.detail|truncatechars:100 }}{% endblock %}
+
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/survey.css' %}" />
   <style></style>
 {% endblock %}
 
+{% block meta %}
+  <!-- OGP設定 -->
+  <meta property="og:title" content="{{ survey.title }}" />
+  <meta property="og:description" content="{{ survey.detail|truncatechars:100 }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
+  <!-- Twitter Card設定 -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="{{ survey.title }}" />
+  <meta name="twitter:description" content="{{ survey.detail|truncatechars:100 }}" />
+  <!-- その他のmeta設定 -->
+  <meta name="description" content="{{ survey.detail|truncatechars:100 }}" />
+{% endblock %}
+
 {% block title %}
-  EasySurvey
+  {{ survey.title }} - EasySurvey
 {% endblock %}
 
 {% block survey_main %}

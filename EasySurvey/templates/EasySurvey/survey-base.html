@@ -1,8 +1,15 @@
 {% extends 'TopPage/base.html' %}
 {% load static %}
+
+{% block meta %}
+  <!-- デフォルトのmeta設定 -->
+  <meta name="description" content="EasySurvey - 簡単にアンケートを作成・管理できるWebアプリケーション" />
+{% endblock %}
+
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/survey.css' %}" />
 {% endblock %}
+
 {% block title %}
   EasySurvey
 {% endblock %}
