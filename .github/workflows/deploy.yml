@@ -40,11 +40,11 @@ jobs:
           # デバッグ用：SSH鍵の確認（最初の数行のみ表示）
           head -n 3 ~/.ssh/id_rsa
           # PythonAnywhereにSSHで接続してデプロイ
-          ssh -v -o StrictHostKeyChecking=no $PA_USERNAME@ssh.pythonanywhere.com 'cd /home/$PA_USERNAME/EasyPyTools && \
+          ssh -v -o StrictHostKeyChecking=no $PA_USERNAME@ssh.pythonanywhere.com "cd /home/$PA_USERNAME/EasyPyTools && \
             git pull origin main && \
             pip install -r requirements.txt && \
             python manage.py migrate && \
-            touch EasyPyTools/wsgi.py'
+            touch EasyPyTools/wsgi.py"
 
 
 
