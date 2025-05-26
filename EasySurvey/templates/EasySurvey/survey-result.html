@@ -21,9 +21,9 @@
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>質問</th>
+            <th id="question-title">質問</th>
             {% for responder in responders %}
-              <th style="white-space: nowrap;">{{ responder }}</th>
+              <th id="responder-name">{{ responder }}</th>
             {% endfor %}
           </tr>
         </thead>
