@@ -38,7 +38,7 @@ jobs:
           echo "$PA_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           # PythonAnywhereにSSHで接続してデプロイ
-          ssh -o StrictHostKeyChecking=no $PA_USERNAME@ssh.pythonanywhere.com "
+          ssh -o StrictHostKeyChecking=no $PA_USERNAME@ssh.pythonanywhere.com"
             cd /home/$PA_USERNAME/EasyPyTools && \
             git pull origin main && \
             pip install -r requirements.txt && \
