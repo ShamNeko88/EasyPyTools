@@ -61,8 +61,10 @@
       <div class="form-group text-center">
         <button type="button" id="add-new-question-btn" class="btn btn-secondary">＋ 質問を追加</button>
       </div>
-      <button type="submit" class="btn btn-primary">保存</button>
-      <a href="{% url 'survey-list' %}" class="btn btn-secondary">キャンセル</a>
+      <div class="d-flex justify-content-end align-items-center">
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a href="{% url 'survey-list' %}" class="btn btn-secondary ml-2">キャンセル</a>
+      </div>
     </form>
   </div>
 {% endblock %}

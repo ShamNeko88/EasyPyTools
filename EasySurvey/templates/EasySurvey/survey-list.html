@@ -18,11 +18,16 @@
               <span class="text-muted mb-2 mb-md-0">{{ survey.created_at|date:'Y-m-d' }}</span>
               <!-- タイトル -->
               <a href="{% url 'survey-result' access_token=survey.access_token %}" class="ml-md-3 mb-2 mb-md-0">{{ survey.title }}</a>
-              <!-- コピー機能 -->
+              <!-- その他機能ボタン -->
               <div class="ml-md-auto">
+                <!-- 回答ページのURLコピー -->
                 <input type="hidden" readonly class="form-control mt-2" value="{{ request.scheme }}://{{ request.get_host }}{% url 'survey-answer' survey.access_token %}" id="survey-url-{{ survey.survey_id }}" />
                 <button class="btn-sm btn-secondary mt-2" onclick="copyToClipboard('survey-url-{{ survey.survey_id }}')">回答ページのURL</button>
+                <!-- 回答ページへ遷移 -->
+                <a href="{% url 'survey-answer' access_token=survey.access_token %}" class="btn-sm btn-primary">回答</a>
+                <!-- 編集 -->
                 <a href="{% url 'survey-edit' survey.survey_id %}" class="btn-sm btn-success mt-2">編集</a>
+                <!-- 削除 -->
                 <a href="{% url 'survey-delete' survey.survey_id %}" class="btn-sm btn-danger mt-2">削除</a>
               </div>
             </div>
