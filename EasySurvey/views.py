@@ -114,22 +114,35 @@ class SurveyResultView(View):
         # アクセストークンを使ってアンケートを取得
         access_token = kwargs.get("access_token")
         survey = get_object_or_404(TrnSurvey, access_token=access_token)
-        questions = TrnSurveyQuestion.objects.filter(survey_id=survey)
+        questions = TrnSurveyQuestion.objects.filter(survey_id=survey).order_by('question_id')
+
+        # 回答者一覧を取得
+        responders = TrnSurveyAnswer.objects.filter(
+            survey_id=survey
+        ).values_list('responder', flat=True).distinct().order_by('responder')
 
         # 各質問に対する回答の集計
         results = []
         for question in questions:
-            answers = TrnSurveyAnswer.objects.filter(question_id=question)
-            results.append(
-                {
-                    "question": question.question,
-                    "answers": answers,  # 各回答者の回答を含む
-                }
-            )
+            # 各回答者の回答を取得（回答がない場合はNone）
+            answers = []
+            for responder in responders:
+                answer = TrnSurveyAnswer.objects.filter(
+                    survey_id=survey,
+                    question_id=question,
+                    responder=responder
+                ).first()
+                answers.append(answer)
+            
+            results.append({
+                "question": question.question,
+                "answers": answers,
+            })
 
         context = {
             "survey": survey,
             "results": results,
+            "responders": responders,
         }
         return render(request, self.template_name, context)
 

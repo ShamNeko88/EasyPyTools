@@ -7,7 +7,7 @@
 
 {% block survey_main %}
   <div class="container">
-    <h2 class="mb-3">アンケート編集</h2>
+    <h2 class="mb-3">アンケート結果</h2>
     <hr />
     <div class="d-flex justify-content-end">
       <input hidden="text" id="survey-url" value="{{ request.build_absolute_uri }}" readonly class="form-control" />
@@ -16,40 +16,47 @@
     <h1>{{ survey.title }}</h1>
     <p>{{ survey.detail|linebreaksbr }}</p>
     <hr />
-    {% for result in results %}
-      <div class="mb-4">
-        <h4>{{ result.question }}</h4>
-        <table class="table table-bordered table-striped">
-          <thead>
+    
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>質問</th>
+            {% for responder in responders %}
+              <th>{{ responder }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in results %}
             <tr>
-              <th>回答者</th>
-              <th>回答</th>
-              <th>コメント</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for answer in result.answers %}
-              <tr>
-                <td>{{ answer.responder }}</td>
+              <td>{{ result.question }}</td>
+              {% for answer in result.answers %}
                 <td>
-                  {% if answer.answer == '1' %}
-                    〇
-                  {% elif answer.answer == '2' %}
-                    △
-                  {% elif answer.answer == '3' %}
-                    ×
-                  {% elif answer.answer == '0' %}
-                    ー
+                  {% if answer %}
+                    {% if answer.answer == '1' %}
+                      〇
+                    {% elif answer.answer == '2' %}
+                      △
+                    {% elif answer.answer == '3' %}
+                      ×
+                    {% elif answer.answer == '0' %}
+                      -
+                    {% else %}
+                      不明
+                    {% endif %}
+                    {% if answer.comment %}
+                      <br><small class="text-muted">{{ answer.comment }}</small>
+                    {% endif %}
                   {% else %}
-                    不明
+                    -
                   {% endif %}
                 </td>
-                <td>{{ answer.comment|default:'なし' }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% endfor %}
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 {% endblock %}
