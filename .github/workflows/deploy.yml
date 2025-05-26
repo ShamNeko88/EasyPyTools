@@ -37,10 +37,8 @@ jobs:
           mkdir -p ~/.ssh
           printf "%s\n" "$PA_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          # デバッグ用：SSH鍵の確認（最初の数行のみ表示）
-          head -n 3 ~/.ssh/id_rsa
           # PythonAnywhereにSSHで接続してデプロイ
-          ssh -v -o StrictHostKeyChecking=no $PA_USERNAME@ssh.pythonanywhere.com "cd /home/$PA_USERNAME/EasyPyTools && \
+          ssh -o StrictHostKeyChecking=no $PA_USERNAME@ssh.pythonanywhere.com "cd /home/$PA_USERNAME/EasyPyTools && \
             git pull origin main && \
             pip install -r requirements.txt && \
             python manage.py migrate && \
