@@ -35,7 +35,7 @@ jobs:
         run: |
           # SSH秘密鍵をセット
           mkdir -p ~/.ssh
-          echo -e "$PA_SSH_KEY" > ~/.ssh/id_rsa
+          echo "$PA_SSH_KEY" | base64 -d > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           # デバッグ用：SSH鍵の確認（最初の数行のみ表示）
           head -n 3 ~/.ssh/id_rsa
