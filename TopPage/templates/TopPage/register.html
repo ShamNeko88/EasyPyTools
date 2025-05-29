@@ -13,6 +13,9 @@
                 <div class="form-group">
                   <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                   {{ field }}
+                  {% if field.name == 'email' %}
+                    <small class="form-text text-muted">※任意項目です。後から設定することもできます。パスワード忘れた際に使えます。</small>
+                  {% endif %}
                   {% if field.errors %}
                     {% for error in field.errors %}
                       <div class="alert alert-danger">{{ error }}</div>
@@ -22,8 +25,9 @@
               {% endfor %}
               <p class="text-muted">以下の条件を満たす必要があります:</p>
               <ul class="alert alert-info">
-                <li class=" ml-2">ユーザー名：3文字以上</li>
-                <li class=" ml-2">パスワード：8文字以上</li>
+                <li class="ml-2">ユーザー名：3文字以上</li>
+                <li class="ml-2">メールアドレス：有効な形式（例：user@example.com）</li>
+                <li class="ml-2">パスワード：8文字以上</li>
               </ul>
               <button type="submit" class="btn btn-primary">登録</button>
             </form>
