@@ -1,0 +1,40 @@
+{% extends 'TopPage/base.html' %}
+{% load static %}
+
+{% block title %}メールアドレス設定 - EasyPyTools{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">メールアドレス設定</h2>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.email.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    {% if form.email.value %}変更{% else %}設定{% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

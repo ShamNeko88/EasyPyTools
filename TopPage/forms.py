@@ -19,3 +19,18 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']  # UserCreationFormのフィールドを使用
+
+
+class EmailSettingForm(forms.ModelForm):
+    email = forms.EmailField(
+        label="メールアドレス",
+        required=True,
+        error_messages={
+            'required': 'メールアドレスは必須です。',
+            'invalid': '有効なメールアドレスを入力してください。',
+        }
+    )
+
+    class Meta:
+        model = User
+        fields = ['email']
