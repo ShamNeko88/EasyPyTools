@@ -51,7 +51,7 @@
 
 {% block survey_main %}
   <div class="container">
-    <div class="d-flex justify-content-end align-items-center">
+    <div class="d-flex justify-content-end align-items-center mb-3">
       <button type="submit" class="btn btn-success mr-2">回答を送信</button>
       <a href="{% url 'survey-result' access_token=survey.access_token %}" class="btn btn-primary" target="_blank">結果を見る</a>
     </div>
