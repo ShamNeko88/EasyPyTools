@@ -11,25 +11,29 @@
               {% csrf_token %}
               {% for field in form %}
                 <div class="form-group">
-                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                  {{ field }}
+                  <label for="{{ field.id_for_label }}" class="d-block">{{ field.label }}</label>
+                  <div class="mt-2">
+                    {{ field }}
+                  </div>
                   {% if field.name == 'email' %}
-                    <small class="form-text text-muted">※任意項目です。後から設定することもできます。パスワード忘れた際に使えます。</small>
+                    <small class="form-text text-muted mt-1 d-block">※任意項目です。後から設定することもできます。パスワード忘れた際に使えます。</small>
                   {% endif %}
                   {% if field.errors %}
                     {% for error in field.errors %}
-                      <div class="alert alert-danger">{{ error }}</div>
+                      <div class="alert alert-danger mt-1">{{ error }}</div>
                     {% endfor %}
                   {% endif %}
                 </div>
               {% endfor %}
-              <p class="text-muted">以下の条件を満たす必要があります:</p>
+              <p class="text-muted mt-4">以下の条件を満たす必要があります:</p>
               <ul class="alert alert-info">
-                <li class="ml-2">ユーザー名：3文字以上</li>
-                <li class="ml-2">メールアドレス：有効な形式（例：user@example.com）</li>
-                <li class="ml-2">パスワード：8文字以上</li>
+                <li class="mb-1 ml-2">ユーザー名：3文字以上</li>
+                <li class="mb-1 ml-2">メールアドレス：有効な形式（例：user@example.com）</li>
+                <li class="mb-1 ml-2">パスワード：8文字以上</li>
               </ul>
-              <button type="submit" class="btn btn-primary">登録</button>
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary">登録</button>
+              </div>
             </form>
           </div>
         </div>

@@ -1,5 +1,7 @@
 {% extends 'TopPage/base.html' %}
 
+{% block title %}ログイン - EasyPyTools{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
   <div class="row justify-content-center">
@@ -11,21 +13,26 @@
         <div class="card-body">
           <form method="post">
             {% csrf_token %}
-            <div class="form-group">
-              <label for="id_username">ユーザー名</label>
-              <input type="text" name="username" class="form-control" id="id_username" required>
-            </div>
-            <div class="form-group">
-              <label for="id_password">パスワード</label>
-              <input type="password" name="password" class="form-control" id="id_password" required>
-            </div>
-            {% if form.errors %}
-              <div class="alert alert-danger">
-                ユーザー名またはパスワードが正しくありません。
+            {% for field in form %}
+              <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="d-block">{{ field.label }}</label>
+                <div class="mt-2">
+                  {{ field }}
+                </div>
+                {% if field.errors %}
+                  {% for error in field.errors %}
+                    <div class="alert alert-danger mt-1">{{ error }}</div>
+                  {% endfor %}
+                {% endif %}
               </div>
-            {% endif %}
-            <button type="submit" class="btn btn-primary">ログイン</button>
+            {% endfor %}
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary">ログイン</button>
+            </div>
           </form>
+          <div class="text-center mt-3">
+            <a href="{% url 'password_reset' %}" class="text-muted">パスワードをお忘れですか？</a>
+          </div>
         </div>
       </div>
     </div>

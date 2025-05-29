@@ -24,6 +24,7 @@ def validate_email_format(value):
             raise ValidationError('メールアドレスのローカル部分が長すぎます。')
 
 
+# ユーザー登録フォーム
 class UserRegistrationForm(UserCreationForm):
     username = forms.CharField(
         label="ユーザー名",
@@ -49,10 +50,11 @@ class UserRegistrationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
+# メールアドレス設定フォーム
 class EmailSettingForm(forms.ModelForm):
     email = forms.EmailField(
         label="メールアドレス",
-        required=True,
+        required=False,
         validators=[validate_email_format],
         error_messages={
             'required': 'メールアドレスは必須です。',

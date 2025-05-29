@@ -30,8 +30,9 @@
                     </div>
                     {% endif %}
                 </div>
+                <small class="form-text text-muted mb-3">メールアドレスを削除するには、メールアドレスを空欄にしてください。</small>
                 <button type="submit" class="btn btn-primary">
-                    {% if form.email.value %}変更{% else %}設定{% endif %}
+                    {% if form.email.value %}変更{% else %}登録{% endif %}
                 </button>
             </form>
         </div>
