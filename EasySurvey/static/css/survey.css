@@ -67,3 +67,14 @@ h1 {
 #delete-content {
     color: crimson;
 }
+
+/* アンケート結果ページのスタイル */
+#responder-name {
+    white-space: nowrap;
+    min-width: 100px;
+}
+
+#question-title {
+    min-width: 100px;
+}
+
