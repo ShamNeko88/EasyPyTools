@@ -29,8 +29,6 @@ SECRET_KEY = 'django-insecure-a8zmaew-kk8f^ey=+_jkd$_eq0#67)9#0ylf(86axii-4tkqcu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'  # .envファイルで「DEBUG=True」であればデバッグモード起動
 
-# TODO: .envによる環境変数の設定断念。できませんでしたのでハードコーディングします。
-# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
 
@@ -80,7 +78,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'EasyPyTools.wsgi.application'
 
 
-# TODO: この情報gitに上げたくない
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 DJANGO_ENV = os.getenv('DJANGO_ENV')
@@ -144,8 +141,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "EasyLiveMemo/static",  # EasyLiveMemoアプリのstaticディレクトリ
     BASE_DIR / "TopPage/static",  # TopPageアプリのstaticディレクトリ
-    BASE_DIR / "EasyMdBlog/static",
-    BASE_DIR / "EasySurvey/static"
+    BASE_DIR / "EasyMdBlog/static",  # EasyMdBlogアプリのstaticディレクトリ
+    BASE_DIR / "EasySurvey/static"  # EasySurveyアプリのstaticディレクトリ
 ]
 
 # 本番環境用のSTATIC_ROOTを指定
