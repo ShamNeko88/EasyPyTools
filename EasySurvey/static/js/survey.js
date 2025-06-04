@@ -15,6 +15,7 @@ class SurveyForm {
             this.setupQuestionManagement();
             this.setupUrlCopy();
             this.setupAnswerForm();
+            this.setupSurveyListUrlCopy();
         });
     }
 
@@ -211,6 +212,20 @@ class SurveyForm {
             errorDiv.className = 'alert alert-danger mb-4';
             errorDiv.style.display = 'block';
         }
+    }
+
+    /**
+     * アンケート一覧ページのURLコピー機能のセットアップ
+     */
+    setupSurveyListUrlCopy() {
+        const copyButtons = document.querySelectorAll('[onclick^="copyToClipboard"]');
+        copyButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const elementId = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                this.copyToClipboard(elementId);
+            });
+        });
     }
 }
 
