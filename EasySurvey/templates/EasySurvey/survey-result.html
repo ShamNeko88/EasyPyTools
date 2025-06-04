@@ -31,7 +31,7 @@
                   {% if answer and answer.responder == responder %}
                     <a href="{% url 'survey-answer-edit' access_token=survey.access_token answer_id=answer.answer_id %}">{{ responder }}</a>
                     <br /><small class="text-muted">{{ answer.updated_at|date:'n/j H:i' }}</small>
-                    {% if answer.created_at != answer.updated_at %}
+                    {% if answer.created_at|date:'Y-m-d H:i:s' != answer.updated_at|date:'Y-m-d H:i:s' %}
                       <small class="text-muted">(編集済み)</small>
                     {% endif %}
                   {% endif %}
