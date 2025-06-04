@@ -323,24 +323,33 @@ class SurveyAnswerEditView(View):
         answer = get_object_or_404(TrnSurveyAnswer, answer_id=answer_id)
         questions = TrnSurveyQuestion.objects.filter(survey_id=survey)
 
-        # 回答の更新
-        for question in questions:
-            answer_text = request.POST.get(f"question_{question.question_id}")
-            comment_text = request.POST.get(f"comment_{question.question_id}", "")
-            
-            if answer_text or comment_text:
-                if not answer_text:
-                    answer_text = "0"
-                TrnSurveyAnswer.objects.update_or_create(
-                    survey_id=survey,
-                    question_id=question,
-                    responder=answer.responder,
-                    defaults={
-                        "answer": answer_text,
-                        "comment": comment_text,
-                        "updated_at": timezone.now(),
-                    },
-                )
+        try:
+            # 回答の更新
+            for question in questions:
+                answer_text = request.POST.get(f"question_{question.question_id}")
+                comment_text = request.POST.get(f"comment_{question.question_id}", "")
+                
+                if answer_text or comment_text:
+                    if not answer_text:
+                        answer_text = "0"
+                    TrnSurveyAnswer.objects.update_or_create(
+                        survey_id=survey,
+                        question_id=question,
+                        responder=answer.responder,
+                        defaults={
+                            "answer": answer_text,
+                            "comment": comment_text,
+                            "updated_at": timezone.now(),
+                        },
+                    )
 
-        # 更新後に結果ページへリダイレクト
-        return redirect("survey-result", access_token=access_token)
+            # 成功時のレスポンス
+            return JsonResponse({
+                "success": True,
+                "redirect_url": reverse("survey-result", kwargs={"access_token": access_token})
+            })
+        except Exception as e:
+            # エラー時のレスポンス
+            return JsonResponse({
+                "error": "回答の更新に失敗しました。もう一度お試しください。"
+            }, status=400)

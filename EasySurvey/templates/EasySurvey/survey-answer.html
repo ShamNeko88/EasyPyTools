@@ -108,38 +108,4 @@
 
 {% block extra_js %}
   <script src="{% static 'js/survey.js' %}"></script>
-  <script>
-    document.getElementById('answer-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const formData = new FormData(this);
-      
-      fetch(window.location.href, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          // エラーメッセージを表示
-          const errorDiv = document.getElementById('error-message');
-          errorDiv.textContent = data.error;
-          errorDiv.style.display = 'block';
-        } else if (data.success && data.redirect_url) {
-          // 成功時は結果ページへリダイレクト
-          window.location.href = data.redirect_url;
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        // エラー時のフォールバック
-        const errorDiv = document.getElementById('error-message');
-        errorDiv.textContent = 'エラーが発生しました。もう一度お試しください。';
-        errorDiv.style.display = 'block';
-      });
-    });
-  </script>
 {% endblock %}

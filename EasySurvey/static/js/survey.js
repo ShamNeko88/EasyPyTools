@@ -14,6 +14,7 @@ class SurveyForm {
             this.setupFormEnterKeyPrevention();
             this.setupQuestionManagement();
             this.setupUrlCopy();
+            this.setupAnswerForm();
         });
     }
 
@@ -155,6 +156,58 @@ class SurveyForm {
      */
     showAlert(message, type = 'info') {
         alert(message);
+    }
+
+    /**
+     * アンケート回答フォームのセットアップ
+     */
+    setupAnswerForm() {
+        const answerForm = document.getElementById('answer-form');
+        if (answerForm) {
+            answerForm.addEventListener('submit', (e) => this.handleAnswerSubmit(e));
+        }
+    }
+
+    /**
+     * アンケート回答の送信処理
+     */
+    async handleAnswerSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        
+        try {
+            const response = await fetch(window.location.href, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.error) {
+                this.showAnswerError(data.error);
+            } else if (data.success && data.redirect_url) {
+                window.location.href = data.redirect_url;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            this.showAnswerError('エラーが発生しました。もう一度お試しください。');
+        }
+    }
+
+    /**
+     * アンケート回答のエラー表示
+     */
+    showAnswerError(message) {
+        const errorDiv = document.getElementById('error-message');
+        if (errorDiv) {
+            errorDiv.textContent = message;
+            errorDiv.className = 'alert alert-danger mb-4';
+            errorDiv.style.display = 'block';
+        }
     }
 }
 
