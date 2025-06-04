@@ -68,6 +68,10 @@ class TrnSurveyAnswer(models.Model):
         # ユニーク制約を追加
         constraints = [
             UniqueConstraint(
+                fields=["survey_id", "responder"],
+                name="unique_survey_responder",  # ユニーク制約の名前
+            ),
+            UniqueConstraint(
                 fields=["survey_id", "question_id", "responder"],
                 name="unique_survey_question_responder",  # ユニーク制約の名前
             )

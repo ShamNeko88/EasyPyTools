@@ -84,6 +84,13 @@ class SurveyAnswerView(View):
         if not responder_name:
             return JsonResponse({"error": "回答者名は必須です。"}, status=400)
 
+        # 回答者名の重複チェック
+        if TrnSurveyAnswer.objects.filter(survey_id=survey, responder=responder_name).exists():
+            return JsonResponse(
+                {"error": "この名前は既に使用されています。別の名前を入力してください。"}, 
+                status=400
+            )
+
         # 各質問に対する回答とコメントを取得
         for question in questions:
             answer_text = request.POST.get(f"question_{question.question_id}")
@@ -91,19 +98,19 @@ class SurveyAnswerView(View):
             if answer_text or comment_text:
                 if not answer_text:
                     answer_text = "0"
-                TrnSurveyAnswer.objects.update_or_create(
+                TrnSurveyAnswer.objects.create(
                     survey_id=survey,
                     question_id=question,
                     responder=responder_name,
-                    defaults={
-                        "answer": answer_text,
-                        "comment": comment_text,
-                        "updated_at": timezone.now(),
-                    },
+                    answer=answer_text,
+                    comment=comment_text,
                 )
 
-        # 回答保存後に結果ページへリダイレクト
-        return redirect("survey-result", access_token=access_token)
+        # 成功時のレスポンス
+        return JsonResponse({
+            "success": True,
+            "redirect_url": reverse("survey-result", kwargs={"access_token": access_token})
+        })
 
 
 # アンケート結果ページ
