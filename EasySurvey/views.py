@@ -285,3 +285,55 @@ class ResponderDeleteView(LoginRequiredMixin, TemplateView):
         survey = get_object_or_404(TrnSurvey, pk=self.kwargs["pk"])
         TrnSurveyAnswer.objects.filter(survey_id=survey).delete()
         return redirect(reverse_lazy("survey-edit", kwargs={"pk": survey.pk}))
+
+
+# 回答編集ビュー
+class SurveyAnswerEditView(View):
+    template_name = "EasySurvey/survey-answer-edit.html"
+
+    def get(self, request, *args, **kwargs):
+        access_token = kwargs.get("access_token")
+        answer_id = kwargs.get("answer_id")
+        
+        # アンケートと回答を取得
+        survey = get_object_or_404(TrnSurvey, access_token=access_token)
+        answer = get_object_or_404(TrnSurveyAnswer, answer_id=answer_id)
+        questions = TrnSurveyQuestion.objects.filter(survey_id=survey)
+
+        context = {
+            "survey": survey,
+            "answer": answer,
+            "questions": questions,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        access_token = kwargs.get("access_token")
+        answer_id = kwargs.get("answer_id")
+        
+        # アンケートと回答を取得
+        survey = get_object_or_404(TrnSurvey, access_token=access_token)
+        answer = get_object_or_404(TrnSurveyAnswer, answer_id=answer_id)
+        questions = TrnSurveyQuestion.objects.filter(survey_id=survey)
+
+        # 回答の更新
+        for question in questions:
+            answer_text = request.POST.get(f"question_{question.question_id}")
+            comment_text = request.POST.get(f"comment_{question.question_id}", "")
+            
+            if answer_text or comment_text:
+                if not answer_text:
+                    answer_text = "0"
+                TrnSurveyAnswer.objects.update_or_create(
+                    survey_id=survey,
+                    question_id=question,
+                    responder=answer.responder,
+                    defaults={
+                        "answer": answer_text,
+                        "comment": comment_text,
+                        "updated_at": timezone.now(),
+                    },
+                )
+
+        # 更新後に結果ページへリダイレクト
+        return redirect("survey-result", access_token=access_token)

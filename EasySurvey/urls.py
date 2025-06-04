@@ -9,6 +9,7 @@ from .views import (
     SurveyEditView,
     QuestionDeleteView,
     ResponderDeleteView,
+    SurveyAnswerEditView,
 )
 
 urlpatterns = [
@@ -49,5 +50,10 @@ urlpatterns = [
         "survey/<int:pk>/responder-delete/",
         ResponderDeleteView.as_view(),
         name="survey-responder-delete",
+    ),
+    path(
+        "survey/<str:access_token>/answer/<int:answer_id>/edit/",
+        SurveyAnswerEditView.as_view(),
+        name="survey-answer-edit",
     ),
 ]

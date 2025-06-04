@@ -23,7 +23,15 @@
           <tr>
             <th id="question-title">質問</th>
             {% for responder in responders %}
-              <th id="responder-name">{{ responder }}</th>
+              <th id="responder-name">
+                {% for answer in results.0.answers %}
+                  {% if answer and answer.responder == responder %}
+                    <a href="{% url 'survey-answer-edit' access_token=survey.access_token answer_id=answer.answer_id %}">
+                      {{ responder }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </th>
             {% endfor %}
           </tr>
         </thead>

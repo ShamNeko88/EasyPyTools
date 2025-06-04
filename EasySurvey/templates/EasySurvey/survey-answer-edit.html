@@ -1,0 +1,65 @@
+{% extends 'EasySurvey/survey-base.html' %}
+{% load static %}
+
+{% block title %}
+  回答編集 - {{ survey.title }}
+{% endblock %}
+
+{% block survey_main %}
+  <div class="container">
+    <div class="d-flex justify-content-end align-items-center mb-3">
+      <button type="submit" class="btn btn-success mr-2">更新</button>
+      <a href="{% url 'survey-result' access_token=survey.access_token %}" class="btn btn-secondary">キャンセル</a>
+    </div>
+    <h1>{{ survey.title }}</h1>
+    {% if survey.detail %}
+      <div class="mb-4">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">{{ survey.detail|linebreaksbr }}</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <form id="answer-form" method="post">
+      {% csrf_token %}
+      <!-- 注意書き -->
+      <div class="alert alert-info mb-4">
+        <i class="fas fa-info-circle"></i>
+        <strong>ご注意：</strong>絵文字や特殊文字は使用できません。通常の文字（英数字、ひらがな、カタカナ、漢字）のみご使用ください。
+      </div>
+      <!-- 回答者名の表示 -->
+      <div class="form-group">
+        <label for="responder">回答者名</label>
+        <input type="text" class="form-control" id="responder" value="{{ answer.responder }}" readonly />
+      </div>
+      <!-- 質問内容の表示とラジオボタン表示 -->
+      {% for question in questions %}
+        <div class="form-group">
+          <hr />
+          <p>{{ question.question }}</p>
+          {% if question.show_choices_flag == '1' %}
+            <div class="radio-group">
+              <input type="radio" id="question_{{ question.question_id }}_1" name="question_{{ question.question_id }}" value="1" required 
+                {% if answer.answer == '1' %}checked{% endif %} />
+              <label for="question_{{ question.question_id }}_1">〇</label>
+
+              <input type="radio" id="question_{{ question.question_id }}_2" name="question_{{ question.question_id }}" value="2"
+                {% if answer.answer == '2' %}checked{% endif %} />
+              <label for="question_{{ question.question_id }}_2">△</label>
+
+              <input type="radio" id="question_{{ question.question_id }}_3" name="question_{{ question.question_id }}" value="3"
+                {% if answer.answer == '3' %}checked{% endif %} />
+              <label for="question_{{ question.question_id }}_3">×</label>
+            </div>
+          {% endif %}
+          <textarea class="form-control mt-2" name="comment_{{ question.question_id }}" rows="3" placeholder="コメントを入力してください（オプション）">{{ answer.comment }}</textarea>
+        </div>
+      {% endfor %}
+      <div class="d-flex justify-content-end align-items-center">
+        <button type="submit" class="btn btn-success mr-2">更新</button>
+        <a href="{% url 'survey-result' access_token=survey.access_token %}" class="btn btn-secondary">キャンセル</a>
+      </div>
+    </form>
+  </div>
+{% endblock %} 
