@@ -16,23 +16,24 @@
     <h1>{{ survey.title }}</h1>
     <p>{{ survey.detail|linebreaksbr }}</p>
     <hr />
-    
+
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
             <th id="question-title">
-                質問
-                <br><br>
+              質問
+              <br /><br />
             </th>
             {% for responder in responders %}
               <th id="responder-name">
                 {% for answer in results.0.answers %}
                   {% if answer and answer.responder == responder %}
-                    <a href="{% url 'survey-answer-edit' access_token=survey.access_token answer_id=answer.answer_id %}">
-                      {{ responder }}
-                    </a>
-                    <br><small class="text-muted">{{ answer.updated_at|date:"n/j H:i" }}</small>
+                    <a href="{% url 'survey-answer-edit' access_token=survey.access_token answer_id=answer.answer_id %}">{{ responder }}</a>
+                    <br /><small class="text-muted">{{ answer.updated_at|date:'n/j H:i' }}</small>
+                    {% if answer.created_at != answer.updated_at %}
+                      <small class="text-muted">(編集済み)</small>
+                    {% endif %}
                   {% endif %}
                 {% endfor %}
               </th>
@@ -58,7 +59,7 @@
                       不明
                     {% endif %}
                     {% if answer.comment %}
-                      <br><small class="text-muted">{{ answer.comment }}</small>
+                      <br /><small class="text-muted">{{ answer.comment }}</small>
                     {% endif %}
                   {% else %}
                     -
