@@ -21,7 +21,10 @@
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th id="question-title">質問</th>
+            <th id="question-title">
+                質問
+                <br><br>
+            </th>
             {% for responder in responders %}
               <th id="responder-name">
                 {% for answer in results.0.answers %}
@@ -29,6 +32,7 @@
                     <a href="{% url 'survey-answer-edit' access_token=survey.access_token answer_id=answer.answer_id %}">
                       {{ responder }}
                     </a>
+                    <br><small class="text-muted">{{ answer.updated_at|date:"n/j H:i" }}</small>
                   {% endif %}
                 {% endfor %}
               </th>
