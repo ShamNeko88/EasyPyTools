@@ -95,7 +95,7 @@ class SurveyForm {
      */
     getQuestionTemplate(questionCount) {
         return `
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center w-100">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" 
                            id="show_choices${questionCount}" 
@@ -104,10 +104,13 @@ class SurveyForm {
                     <label class="form-check-label text-nowrap" 
                            for="show_choices${questionCount}"></label>
                 </div>
-                <input type="text" class="form-control mr-2" 
-                       name="questions[]" 
-                       placeholder="質問を入力" required/>
-                <button type="button" class="btn btn-danger remove-question-btn text-nowrap">削除</button>
+                <div class="flex-grow-1">
+                    <input type="text" class="form-control" 
+                           name="questions[]" 
+                           placeholder="質問を入力" 
+                           required/>
+                </div>
+                <button type="button" class="btn btn-danger remove-question-btn text-nowrap ml-2">削除</button>
             </div>
         `;
     }
