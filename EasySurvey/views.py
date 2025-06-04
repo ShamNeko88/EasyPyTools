@@ -340,7 +340,12 @@ class SurveyAnswerEditView(View):
                 answer_text = request.POST.get(f"question_{question.question_id}")
                 comment_text = request.POST.get(f"comment_{question.question_id}", "")
                 
-                if answer_text or comment_text:
+                # 選択肢が非表示の質問の場合は、answer_textを"0"に設定
+                if question.show_choices_flag == "0":
+                    answer_text = "0"
+                
+                # コメントが入力されている場合は更新
+                if comment_text or answer_text:
                     if not answer_text:
                         answer_text = "0"
                     TrnSurveyAnswer.objects.update_or_create(
