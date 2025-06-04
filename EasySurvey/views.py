@@ -304,12 +304,23 @@ class SurveyAnswerEditView(View):
         
         # アンケートと回答を取得
         survey = get_object_or_404(TrnSurvey, access_token=access_token)
-        answer = get_object_or_404(TrnSurveyAnswer, answer_id=answer_id)
+        initial_answer = get_object_or_404(TrnSurveyAnswer, answer_id=answer_id)
         questions = TrnSurveyQuestion.objects.filter(survey_id=survey)
+
+        # 各質問ごとの回答を取得
+        answers = {}
+        for question in questions:
+            answer = TrnSurveyAnswer.objects.filter(
+                survey_id=survey,
+                question_id=question,
+                responder=initial_answer.responder
+            ).first()
+            answers[question.question_id] = answer
 
         context = {
             "survey": survey,
-            "answer": answer,
+            "answer": initial_answer,  # テンプレートの互換性のために残す
+            "answers": answers,  # 各質問ごとの回答
             "questions": questions,
         }
         return render(request, self.template_name, context)

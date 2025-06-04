@@ -1,5 +1,6 @@
 {% extends 'EasySurvey/survey-base.html' %}
 {% load static %}
+{% load survey_tags %}
 
 {% block title %}
   回答編集 - {{ survey.title }}
@@ -49,7 +50,7 @@
               <label for="question_{{ question.question_id }}_3">×</label>
             </div>
           {% endif %}
-          <textarea class="form-control mt-2" name="comment_{{ question.question_id }}" rows="3" placeholder="コメントを入力してください（オプション）">{{ answer.comment }}</textarea>
+          <textarea class="form-control mt-2" name="comment_{{ question.question_id }}" rows="3" placeholder="コメントを入力してください（オプション）">{{ answers|get_item:question.question_id|get_attr:'comment' }}</textarea>
         </div>
       {% endfor %}
       <div class="d-flex justify-content-end align-items-center">
