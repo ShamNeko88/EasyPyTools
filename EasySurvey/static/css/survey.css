@@ -86,14 +86,5 @@ h1 {
 .table thead th {
     position: sticky;
     top: 0;
-    background: #d6eff3; /* 固定箇所の背景色指定して透け防止*/
-    z-index: 2;
-}
-
-/* 一番左の列（質問）を固定 */
-.table th#question-title,
-.table td:first-child {
-    font-weight: bold;
-    position: sticky;
-    left: 0;
+    background: #d2eef2; /* 固定箇所の背景色指定して透け防止*/
 }
