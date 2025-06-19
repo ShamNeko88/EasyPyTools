@@ -78,3 +78,13 @@ h1 {
     min-width: 100px;
 }
 
+.survey-result-scroll {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa; /* 固定箇所の背景色指定して透け防止*/
+}
