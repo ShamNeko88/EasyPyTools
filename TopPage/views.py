@@ -34,7 +34,7 @@ class RegisterView(CreateView):
 
 # パスワード変更
 class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
-    template_name = 'registration/password_change.html'
+    template_name = 'TopPage/password_change.html'
     success_url = reverse_lazy('password_change_done')  # 完了ページのURL
     success_message = "パスワードが変更されました。"
 
@@ -45,7 +45,7 @@ class PasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 # パスワード変更完了画面
 class PasswordChangeDoneView(LoginRequiredMixin, TemplateView):
-    template_name = 'registration/password_change_done.html'
+    template_name = 'TopPage/password_change_done.html'
 
 
 # メールアドレス設定

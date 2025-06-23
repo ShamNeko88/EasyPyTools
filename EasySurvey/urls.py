@@ -38,9 +38,21 @@ urlpatterns = [
         SurveyCompleteView.as_view(),
         name="survey-complete",
     ),
-    path("list/", SurveyListView.as_view(), name="survey-list"),
-    path("delete/<int:pk>/", SurveyDeleteView.as_view(), name="survey-delete"),
-    path("survey/<int:pk>/edit/", SurveyEditView.as_view(), name="survey-edit"),
+    path(
+        "list/",
+        SurveyListView.as_view(),
+        name="survey-list"
+    ),
+    path(
+        "delete/<int:pk>/",
+        SurveyDeleteView.as_view(),
+        name="survey-delete"
+    ),
+    path(
+        "survey/<int:pk>/edit/",
+        SurveyEditView.as_view(),
+        name="survey-edit"
+    ),
     path(
         "question/delete/<int:pk>/",
         QuestionDeleteView.as_view(),
@@ -55,5 +67,5 @@ urlpatterns = [
         "survey/<str:access_token>/answer/<int:answer_id>/edit/",
         SurveyAnswerEditView.as_view(),
         name="survey-answer-edit",
-    ),
+    )
 ]
