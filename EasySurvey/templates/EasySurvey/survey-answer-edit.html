@@ -38,15 +38,15 @@
           {% if question.show_choices_flag == '1' %}
             <div class="radio-group">
               <input type="radio" id="question_{{ question.question_id }}_1" name="question_{{ question.question_id }}" value="1" required 
-                {% if answer.answer == '1' %}checked{% endif %} />
+                {% if answers|get_item:question.question_id|get_attr:'answer' == '1' %}checked{% endif %} />
               <label for="question_{{ question.question_id }}_1">〇</label>
 
               <input type="radio" id="question_{{ question.question_id }}_2" name="question_{{ question.question_id }}" value="2"
-                {% if answer.answer == '2' %}checked{% endif %} />
+                {% if answers|get_item:question.question_id|get_attr:'answer' == '2' %}checked{% endif %} />
               <label for="question_{{ question.question_id }}_2">△</label>
 
               <input type="radio" id="question_{{ question.question_id }}_3" name="question_{{ question.question_id }}" value="3"
-                {% if answer.answer == '3' %}checked{% endif %} />
+                {% if answers|get_item:question.question_id|get_attr:'answer' == '3' %}checked{% endif %} />
               <label for="question_{{ question.question_id }}_3">×</label>
             </div>
           {% endif %}
@@ -59,4 +59,4 @@
       </div>
     </form>
   </div>
-{% endblock %} 
+{% endblock %}
